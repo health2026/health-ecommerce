@@ -69,6 +69,8 @@ header {
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid var(--card-border);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .light header {
@@ -464,7 +466,11 @@ footer a {
   font-weight: 600;
 }
 
-/* Mobile Responsiveness */
+/* ============================================
+   MOBILE RESPONSIVENESS - FULL OVERHAUL
+   ============================================ */
+
+/* Tablet */
 @media (max-width: 1000px) {
   .skillGrid, .serviceGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -472,70 +478,162 @@ footer a {
   .projectGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .storeCard img {
+    height: 220px;
+  }
 }
 
-@media (max-width: 800px) {
-  section {
-    padding: 60px 5%; 
-  }
-  
+/* Mobile */
+@media (max-width: 768px) {
+
+  /* --- Nav --- */
   .nav {
-    flex-wrap: wrap;
     flex-direction: column;
-    padding: 20px 5%;
-    gap: 20px;
+    align-items: center;
+    padding: 14px 4%;
+    gap: 12px;
   }
-  
+
+  .cssLogo {
+    margin-right: 0;
+    font-size: 1.5rem;
+  }
+
   ul {
     width: 100%;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
     flex-wrap: wrap;
+    font-size: 0.85rem;
   }
-  
+
+  li a {
+    font-size: 0.85rem;
+  }
+
+  #themeToggle {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+  }
+
+  /* --- Hero --- */
   .hero {
-    min-height: 70vh;
+    min-height: 100svh;
+    padding-top: 100px;
+    padding-bottom: 60px;
+    background-attachment: scroll;
+    background-position: center top;
+    background-size: cover;
   }
 
   .hero h1 {
-    font-size: 2.8rem;
-  }
-  
-  .hero h3 {
-    font-size: 1.1rem;
-  }
-  
-  .aboutContainer {
-    flex-direction: column;
-    text-align: center;
-    gap: 40px;
-  }
-  
-  .aboutContainer img {
-    max-width: 250px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 40px;
-  }
-  
-  .skillGrid, .projectGrid, .serviceGrid {
-    grid-template-columns: 1fr; 
-    gap: 20px;
+    font-size: 2.2rem;
+    padding: 0 10px;
   }
 
+  .hero h3 {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
+  /* --- Buttons --- */
   .buttons {
     flex-direction: column;
-    width: 100%;
-    max-width: 300px;
+    width: 90%;
+    max-width: 280px;
     margin: 0 auto;
+    gap: 12px;
   }
 
   .btn {
     width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+  }
+
+  /* --- Sections --- */
+  section {
+    padding: 50px 4%;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  /* --- About --- */
+  .aboutContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .aboutContainer img {
+    max-width: 220px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* --- Grids --- */
+  .skillGrid,
+  .projectGrid,
+  .serviceGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* --- Store Cards --- */
+  .storeCard {
+    max-width: 100%;
+  }
+
+  .storeCard img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .storeCardInfo {
+    padding: 20px;
+  }
+
+  .storeCardInfo h3 {
+    font-size: 1.2rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  /* --- Timeline --- */
+  .timeline div {
+    padding: 20px;
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 30px 4%;
+  }
+
+  .socials {
+    gap: 10px;
+  }
+
+  .socials a {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  /* --- Form --- */
+  form {
+    width: 100%;
+    padding: 0 2%;
   }
 }
 
