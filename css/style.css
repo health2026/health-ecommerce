@@ -535,7 +535,7 @@ footer a {
     padding-top: 140px;
     padding-bottom: 80px;
     background-attachment: scroll;
-    background-position: center top; /* improved framing for the new portrait-friendly photo */
+    background-position: center bottom; /* focus on the activity lower in the image */
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
