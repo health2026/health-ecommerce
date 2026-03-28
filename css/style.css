@@ -77,12 +77,13 @@ header {
 
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 15px 5%;
-  max-width: 1200px;
+  padding: 18px 5%;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  gap: 0;
 }
 
 .cssLogo {
@@ -180,7 +181,7 @@ section {
   padding-bottom: 40px;
   position: relative;
   max-width: 100%;
-  background-image: url('https://images.unsplash.com/photo-1511688878353-3a2f5be94cd7?w=1920&q=80');
+  background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&q=80');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
