@@ -930,9 +930,10 @@ footer a {
 }
 
 .payment-hint {
-    color: var(--text-muted);
+    color: #e2e8f0; /* Soft light gray for better visibility */
     font-size: 0.75rem;
     text-align: center;
-    margin-top: 5px;
-    font-weight: 500;
+    margin-top: 8px;
+    font-weight: 600;
+    opacity: 0.9;
 }
