@@ -56,6 +56,7 @@ function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, su
 
     // 1. Render Modern Smart Buttons
     paypal.Buttons({
+        fundingSource: paypal.FUNDING.PAYPAL,
         experience_context: {
             shipping_preference: 'NO_SHIPPING',
             user_action: 'PAY_NOW',
@@ -117,4 +118,22 @@ function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, su
             });
         }
     }
+}
+
+// Simple PayPal Button for products.html
+function initPayPalButton(itemName, amount, btnId) {
+    if (!document.querySelector(btnId)) return;
+    paypal.Buttons({
+        fundingSource: paypal.FUNDING.PAYPAL,
+        experience_context: {
+            shipping_preference: 'NO_SHIPPING',
+            user_action: 'PAY_NOW',
+            landing_page: 'billing' 
+        },
+        style: { shape: 'rect', color: 'blue', layout: 'vertical' },
+        createOrder: (data, actions) => actions.order.create({ purchase_units: [{ description: itemName, amount: { value: amount } }] }),
+        onApprove: (data, actions) => actions.order.capture().then(details => { 
+            window.location.href = 'shipping.html'; 
+        })
+    }).render(btnId);
 }
