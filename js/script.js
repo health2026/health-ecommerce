@@ -49,14 +49,20 @@ function startCountdown() {
 startCountdown();
 
 // PayPal Modern Integration Logic
+// PayPal Modern Integration Logic
 function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, submitId) {
     if (!document.querySelector(btnId)) return;
     
-    const businessEmail = 'rhiatabdellah712@gmail.com'; // Your PayPal Email
+    // Hide the native card form elements and dividers because Sandbox is rejecting them
+    const divider = document.querySelector('.payment-divider');
+    const nativeForm = document.querySelector('.native-card-form');
+    const trustedBadges = document.querySelector('.trusted-badges');
+    if (divider) divider.style.display = 'none';
+    if (nativeForm) nativeForm.style.display = 'none';
+    if (trustedBadges) trustedBadges.style.display = 'none';
 
-    // 1. Render Modern Smart Buttons
+    // 1. Render Modern Smart Buttons (Allowing all funding sources so Black Card button appears)
     paypal.Buttons({
-        fundingSource: paypal.FUNDING.PAYPAL,
         experience_context: {
             shipping_preference: 'NO_SHIPPING',
             user_action: 'PAY_NOW',
@@ -68,63 +74,12 @@ function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, su
             window.location.href = 'shipping.html'; 
         })
     }).render(btnId);
-
-    const submitBtn = document.querySelector(submitId);
-    const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
-
-    // 2. Render Card Fields if eligible
-    if (paypal.CardFields && paypal.CardFields.isEligible()) {
-        const cardFields = paypal.CardFields({
-            createOrder: (data, actions) => actions.order.create({ 
-                purchase_units: [{ description: itemName, amount: { value: amount } }] 
-            }),
-            onApprove: (data, actions) => actions.order.capture().then(details => { 
-                window.location.href = 'shipping.html'; 
-            }),
-            onError: (err) => {
-                console.error(err);
-                submitBtn.innerHTML = originalBtnHTML;
-                alert('حدث خطأ أثناء معالجة البطاقة. يرجى التأكد من البيانات.');
-            }
-        });
-
-        try {
-            cardFields.NumberField().render(numId);
-            cardFields.ExpiryField().render(expId);
-            cardFields.CVVField().render(cvvId);
-            
-            if (submitBtn) {
-                // Change the click event to submit the fields via PayPal API
-                submitBtn.addEventListener('click', () => {
-                    submitBtn.innerHTML = 'جاري الدفع... Processing...';
-                    cardFields.submit().catch(err => {
-                        submitBtn.innerHTML = originalBtnHTML;
-                    });
-                });
-            }
-        } catch(e) {
-            setupFallback();
-        }
-    } else {
-        setupFallback();
-    }
-
-    function setupFallback() {
-        if (submitBtn) {
-            submitBtn.addEventListener('click', () => {
-                submitBtn.innerHTML = 'جاري التحويل الآمن... Redirecting...';
-                const fallbackUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(businessEmail)}&item_name=${encodeURIComponent(itemName)}&amount=${amount}&currency_code=USD&solution_type=Sole&landing_page=Billing`;
-                window.location.href = fallbackUrl;
-            });
-        }
-    }
 }
 
 // Simple PayPal Button for products.html
 function initPayPalButton(itemName, amount, btnId) {
     if (!document.querySelector(btnId)) return;
     paypal.Buttons({
-        fundingSource: paypal.FUNDING.PAYPAL,
         experience_context: {
             shipping_preference: 'NO_SHIPPING',
             user_action: 'PAY_NOW',
