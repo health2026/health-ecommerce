@@ -8,8 +8,8 @@ This document outlines the marketing strategy and video scripts for the health e
 **Goal:** Build trust and peace of mind for parents.
 
 ### Video 1: The Worried Parent (Problem/Solution)
-*   **Hook (0-3s):** A mother waking up at 3 AM looking exhausted and touching her baby's forehead. Text overlay: "Tired of waking up every hour to check your baby's fever?"
-*   **Body (3-12s):** Show the Smart Thermometer being applied gently. Cut to a smartphone screen showing a real-time graph. "Get 24/7 continuous monitoring without waking them up."
+*   **Hook (0-3s):** 
+*   **Body (3-12s):** Show tA mother waking up at 3 AM looking exhausted and touching her baby's forehead. Text overlay: "Tired of waking up every hour to check your baby's fever?"he Smart Thermometer being applied gently. Cut to a smartphone screen showing a real-time graph. "Get 24/7 continuous monitoring without waking them up."
 *   **CTA (12-15s):** "Protect your baby's sleep. Get yours now!"
 
 ### Video 2: Tech-Savvy Parenting (Aesthetic/Features)
@@ -46,3 +46,4 @@ This document outlines the marketing strategy and video scripts for the health e
 *   **Hook (0-3s):** Person putting on the pads. They look sleek and professional.
 *   **Body (3-12s):** Close up of the breathable fabric. Person running/squatting without the pads moving. "Stay cool. Stay dry. Never slips."
 *   **CTA (12-15s):** "The Athlete's Choice. 50% Off Bundle!"
+git add . && git commit -m "Update payment card" && git push
