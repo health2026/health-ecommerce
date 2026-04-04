@@ -1143,6 +1143,31 @@ footer a {
     margin-bottom: 20px;
 }
 
+.credit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #000;
+    color: #fff !important;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.credit-btn:hover {
+    background: #222;
+    transform: translateY(-1px);
+}
+
 .payeer-btn {
     display: flex;
     align-items: center;
@@ -1167,28 +1192,29 @@ footer a {
     box-shadow: 0 8px 15px rgba(0, 136, 204, 0.4);
 }
 
+
 .binance-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     background: #f3ba2f;
     color: #1a1a1a !important;
-    padding: 15px;
-    border-radius: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s;
     border: none;
     cursor: pointer;
     width: 100%;
-    font-size: 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
 }
 
 .binance-btn:hover {
     background: #e6b02a;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(243, 186, 47, 0.4);
+    transform: translateY(-1px);
 }
 
 
