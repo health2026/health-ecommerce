@@ -154,40 +154,40 @@ function showBinanceModal(itemName, amount) {
     const binanceNetwork = "TRC20 (Tron)";
     const whatsappLink = "https://wa.me/212641617786"; // User's WhatsApp
 
-    const modalHTML = `
-        <div id="binanceModal" class="modal">
+
+    // Refresh modal content if exists, or create new
+    let modal = document.getElementById('binanceModal');
+    if (!modal) {
+        document.body.insertAdjacentHTML('beforeend', `<div id="binanceModal" class="modal"></div>`);
+        modal = document.getElementById('binanceModal');
+    }
+    modal.innerHTML = `
             <div class="modal-content" style="max-width: 400px; padding: 25px;">
                 <span class="close-modal">&times;</span>
                 <div style="text-align: center;">
-                    <img src="https://img.icons8.com/color/96/000000/binance.png" alt="Binance Pay" style="width: 40px; margin-bottom: 5px;">
+                    <img src="https://img.icons8.com/color/48/000000/binance.png" alt="Binance Pay" style="width: 40px; margin-bottom: 5px;">
                     <h2 style="font-size: 1.3rem; margin-bottom: 15px; color: #f3ba2f;">Binance Pay | باينانس</h2>
                 </div>
                 
                 <!-- QR Code Section -->
                 <div style="text-align: center; margin: 15px 0;">
-                    <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">Scan to Pay | امسح الكود للدفع</p>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${binanceWallet}" alt="Binance QR" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid #f3ba2f; background: white; padding: 5px;">
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">Scan to Pay | امسح الكود للدفع</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${binanceWallet}" alt="Binance QR" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid #f3ba2f; background: white; padding: 5px;">
                 </div>
 
                 <div style="text-align: center;">
                     <span class="network-badge" style="display: inline-block; margin-bottom: 10px;">NETWORK: ${binanceNetwork}</span>
-                    <div class="wallet-box" id="walletAddr" style="font-size: 0.8rem; word-break: break-all;">${binanceWallet}</div>
-                    <button class="copy-btn" id="copyBtn" style="width: 100%; margin-top: 10px;">Copy Address | نسخ العنوان</button>
-                    <p style="margin-top: 20px; font-size: 0.8rem; color: #94a3b8;">بعد الدفع، يرجى إرسال لقطة شاشة (Screenshot) عبر واتساب لتأكيد طلبك:</p>
-                    <a href="${whatsappLink}?text=تم الدفع عبر Binance لمنتدج: ${itemName}" class="btn" style="margin-top: 10px; display: block; background: #25d366; color: white !important;">
+                    <div class="wallet-box" id="walletAddr" style="font-size: 0.75rem; word-break: break-all; background: rgba(243, 186, 47, 0.1); border: 1px dashed #f3ba2f; padding: 10px; border-radius: 8px; margin: 10px 0;">${binanceWallet}</div>
+                    <button class="copy-btn" id="copyBtn" style="width: 100%; border-radius: 8px; background: #f3ba2f; color: #000; font-weight: 700; padding: 10px;">Copy Address | نسخ العنوان</button>
+                    
+                    <p style="margin-top: 20px; font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">بعد الدفع، يرجى إرسال لقطة شاشة (Screenshot) عبر واتساب لتأكيد طلبك:</p>
+                    <a href="${whatsappLink}?text=تم الدفع عبر Binance لمنتدج: ${itemName}" class="btn" style="margin-top: 10px; display: block; background: #25d366; color: white !important; border-radius: 8px;">
                         إرسال التأكيد | Send Confirmation
                     </a>
                 </div>
             </div>
-        </div>
     `;
 
-    // Append modal if not exists
-    if (!document.getElementById('binanceModal')) {
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
-
-    const modal = document.getElementById('binanceModal');
     modal.style.display = 'flex';
 
     // Simple Close
