@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شكراً لطلبك! | Thank You! - HealthFit</title>
+    <link rel="stylesheet" href="css/style.css?v=8.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background: var(--card);
+            border: 2px solid #22c55e;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 30px;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+        }
+
+        h1 {
+            color: #22c55e;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .order-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent);
+            text-align: right;
+            direction: rtl;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: white !important;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-confirm {
+            background: #25d366;
+            color: white !important;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="nav">
+            <a href="index.html" class="cssLogo">
+                <div class="logoIcon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" fill="white" />
+                    </svg>
+                </div>
+                <div class="logoText">Health<span class="logoHighlight">Fit</span></div>
+            </a>
+            <button id="themeToggle">☀️</button>
+        </nav>
+    </header>
+
+    <div class="success-container">
+        <div class="check-icon">✓</div>
+        <h1>تم استلام طلبك بنجاح!</h1>
+        <p>Order Confirmed Successfully!</p>
+
+        <div class="order-info">
+            <strong>ماذا يحدث الآن؟</strong>
+            <ul style="margin-top: 10px; list-style: none; padding: 0;">
+                <li>✅ سيتم تجهيز طلبك خلال 24 ساعة.</li>
+                <li>📧 ستصلك رسالة تأكيد عبر البريد الإلكتروني.</li>
+                <li>🚚 الشحن سيستغرق 7-14 يوم عمل.</li>
+            </ul>
+        </div>
+
+        <p style="font-size: 0.95rem;">
+            إذا كان لديك أي استفسار، يرجى التواصل معنا عبر واتساب لتأكيد طلبك بسرعة أكبر.
+        </p>
+
+        <div class="btn-group">
+            <a href="https://wa.me/212641617786?text=لقد قمت بطلب من الموقع وأريد التأكيد" class="whatsapp-confirm">
+                <img src="https://img.icons8.com/color/24/000000/whatsapp.png" alt="WhatsApp">
+                تأكيد عبر واتساب
+            </a>
+            <a href="index.html" class="btn outline">العودة للمتجر</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 HealthFit Store</p>
+    </footer>
+
+    <script src="js/script.js?v=8.0"></script>
+</body>
+
+</html>

@@ -1298,3 +1298,45 @@ footer a {
 
 
 
+
+/* Advanced Card Fields Styling */
+.payment-divider {
+    text-align: center;
+    position: relative;
+    margin: 30px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-divider span {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    padding: 0 15px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.card-field-input {
+    background: #ffffff !important;
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    height: 50px !important;
+    border: 1px solid #cbd5e1 !important;
+    margin-bottom: 15px !important;
+}
+
+.card-field-input:focus-within {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.2) !important;
+}
+
+.secure-pay {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border: none !important;
+    height: 60px !important;
+    font-size: 1.1rem !important;
+}

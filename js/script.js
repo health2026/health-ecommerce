@@ -66,7 +66,7 @@ function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, su
         style: { shape: 'rect', color: 'black', layout: 'vertical' },
         createOrder: (data, actions) => actions.order.create({ purchase_units: [{ description: itemName, amount: { value: amount } }] }),
         onApprove: (data, actions) => actions.order.capture().then(details => {
-            window.location.href = 'shipping.html';
+            window.location.href = 'thanks.html';
         })
     }).render(btnId);
 
@@ -80,7 +80,7 @@ function initAdvancedCardFields(itemName, amount, btnId, numId, expId, cvvId, su
             },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    window.location.href = 'shipping.html';
+                    window.location.href = 'thanks.html';
                 });
             },
             onError: function (err) {
@@ -125,7 +125,7 @@ function initPayPalButton(itemName, amount, btnId) {
         style: { shape: 'rect', color: 'black', layout: 'vertical' },
         createOrder: (data, actions) => actions.order.create({ purchase_units: [{ description: itemName, amount: { value: amount } }] }),
         onApprove: (data, actions) => actions.order.capture().then(details => {
-            window.location.href = 'shipping.html';
+            window.location.href = 'thanks.html';
         })
     }).render(btnId);
 }

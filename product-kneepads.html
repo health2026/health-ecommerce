@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Honeycomb Knee Pads | HealthFit</title>
-    <link rel="stylesheet" href="css/style.css?v=7.0">
+    <link rel="stylesheet" href="css/style.css?v=8.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- PayPal SDK with Advanced Card Fields -->
     <script
@@ -118,18 +118,22 @@
                     </div>
 
 
-                    <div class="paypal-instant" id="paypal-buttons-kneepads"></div>
+                    <div id="paypal-buttons-kneepads"></div>
 
                     <div class="payment-divider">
-                        <span>أو الدفع بالبطاقة البنكية | OR CREDIT CARD</span>
+                        <span>أو الدفع المباشر بالبطاقة | DIRECT CARD ENTRY</span>
                     </div>
 
-                    <button class="credit-btn"
-                        onclick="document.querySelector('#paypal-buttons-kneepads [data-card-button]').click();">
-                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Card">
-                        <span>PAY WITH CARD | الدفع بالبطاقة</span>
-                    </button>
-
+                    <div class="native-card-form">
+                        <div class="card-field-input" id="card-number-kneepads"></div>
+                        <div style="display: flex; gap: 10px;">
+                            <div class="card-field-input" id="card-expiry-kneepads" style="flex: 1;"></div>
+                            <div class="card-field-input" id="card-cvv-kneepads" style="flex: 1;"></div>
+                        </div>
+                        <button id="pay-btn-kneepads" class="buyBtn secure-pay" style="margin-top: 10px;">
+                            إتمام الدفع الآن | PAY NOW SECURELY
+                        </button>
+                    </div>
 
                     <div class="trusted-badges">
                         <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa">
@@ -209,7 +213,7 @@
         </div>
         <a href="#" style="margin-top: 20px; display: inline-block;">Back to top</a>
     </footer>
-    <script src="js/script.js?v=7.0"></script>
+    <script src="js/script.js?v=8.0"></script>
 
     <script>
         initAdvancedCardFields('Pro Honeycomb Knee Pads Pair', '19.99', '#paypal-buttons-kneepads', '#card-number-kneepads', '#card-expiry-kneepads', '#card-cvv-kneepads', '#pay-btn-kneepads');
