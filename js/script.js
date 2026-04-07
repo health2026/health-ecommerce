@@ -58,10 +58,13 @@ function initPayPalButton(itemName, amount, btnId) {
         onApprove: (data, actions) => actions.order.capture().then(details => {
             console.log("Success:", details);
             window.location.href = 'thanks.html';
+        }).catch(err => {
+            console.error("Capture Error:", err);
+            alert("عذراً، لم تكتمل العملية. يرجى التأكد من رصيد بطاقتك أو تفعيلها للمشتريات عبر الإنترنت.\n\nTransaction failed. Please check your card balance or ensure it is activated for online shopping.\n\nÉchec de la transaction. Veuillez vérifier le solde de votre carte ou vous assurer qu'elle est activée pour les achats en ligne.");
         }),
         onError: (err) => {
             console.error("PayPal Error:", err);
-            alert("حدث خطأ في عملية الدفع، يرجى إعادة المحاولة.");
+            alert("عذراً، لم تكتمل العملية. يرجى التأكد من رصيد بطاقتك أو تفعيلها للمشتريات عبر الإنترنت.\n\nTransaction failed. Please check your card balance or ensure it is activated for online shopping.\n\nÉchec de la transaction. Veuillez vérifier le solde de votre carte ou vous assurer qu'elle est activée pour les achats en ligne.");
         }
     }).render(btnId);
 }
