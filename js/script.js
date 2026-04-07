@@ -93,7 +93,7 @@ function showBinanceModal(itemName, amount) {
             <div class="modal-content" style="max-width: 270px; padding: 12px; border-radius: 10px;">
                 <span class="close-modal" style="font-size: 18px; top: 10px; right: 15px;">&times;</span>
                 <div style="text-align: center;">
-                    <img src="https://img.icons8.com/color/48/000000/binance.png" alt="Binance Pay" style="width: 28px; margin-bottom: 2px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#f3ba2f" style="margin-bottom: 2px;"><path d="M16.624 13.9202l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm3.696-3.6962l-2.624 2.624-2.616-2.616 2.616-2.624 2.624 2.616zm-3.696-3.6962l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm-3.696 3.6962l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm-3.696-3.6962l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm3.696 11.0886l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm-3.696-3.6962l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm-3.696-3.6962l-2.624 2.624-2.624-2.624 2.624-2.624 2.624 2.624zm3.696-3.6962l-2.624 2.624-2.632-2.632 2.632-2.624 2.624 2.632z"/></svg>
                     <h2 style="font-size: 0.95rem; margin-bottom: 8px; color: #f3ba2f; font-weight: 700;">Binance Pay</h2>
                 </div>
                 <div style="text-align: center; margin: 8px 0;">
