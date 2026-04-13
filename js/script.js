@@ -46,13 +46,8 @@ startCountdown();
 
 // Standard PayPal Link Generator (No API needed)
 function getPayPalEmailLink(itemName, amount) {
-    const email = "abdellah.rhiat@gmail.com";
-    const currentUrl = window.location.href.split('?')[0];
-    const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
-    const successUrl = `${baseUrl}/thanks.html`;
-    const cancelUrl = currentUrl;
-
-    return `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(email)}&item_name=${encodeURIComponent(itemName)}&amount=${encodeURIComponent(amount)}&currency_code=USD&return=${encodeURIComponent(successUrl)}&cancel_return=${encodeURIComponent(cancelUrl)}`;
+    const business = "abdellah.rhiat@gmail.com";
+    return `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${encodeURIComponent(itemName)}&amount=${amount}&currency_code=USD`;
 }
 
 function initPayPalButton(itemName, amount, btnId) {
@@ -64,8 +59,10 @@ function initPayPalButton(itemName, amount, btnId) {
 function renderFallbackButton(container, itemName, amount) {
     container.innerHTML = `
         <a href="${getPayPalEmailLink(itemName, amount)}" target="_blank" class="paypal-btn">
-            <img src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal">
-            <span>PayPal | الدفع عبر بايبال</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="margin-right:8px; flex-shrink:0;">
+                <path d="M20.067 6.378c-.201-1.303-.591-2.18-1.282-2.852C17.65 2.455 15.688 2 13.013 2H6.969c-.439 0-.819.324-.882.756L3.13 21.314a.455.455 0 0 0 .448.52h4.521c.367 0 .685-.27.738-.631l.995-6.848c.053-.361.371-.631.738-.631h2.292c4.463 0 7.37-2.19 8.205-7.346zm-1.636 5.862c-.443 2.766-2.228 4.29-5.111 4.29H11.02c-.367 0-.685.271-.738.631l-1.01 6.945H5.803L8.683 4.834c.052-.361.37-.631.737-.631h3.763c3.486 0 5.41.802 6.002 2.7.202 1.302.138 2.214-.294 3.337z" fill="#003087"/>
+            </svg>
+            <span>PAY WITH PAYPAL</span>
         </a>
     `;
 }

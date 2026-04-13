@@ -798,17 +798,14 @@ footer a {
   background: var(--accent);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 50px;
-  font-size: 0.95rem;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.05rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
   margin-top: auto;
   width: 100%;
-  max-width: 260px;
-  margin-left: auto;
-  margin-right: auto;
   display: block;
   text-align: center;
   text-decoration: none;
@@ -902,47 +899,40 @@ footer a {
   }
 }
 /* Payment Buttons Styles */
-.payment-methods, .payment-area {
+.payment-methods {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     margin-top: auto;
     width: 100%;
-    align-items: center; /* Centers children */
 }
 
 .paypal-btn {
-    display: inline-flex; /* Changed to inline-flex to respect max-width better */
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: linear-gradient(135deg, #ffc439 0%, #ffb114 100%);
+    background: #ffc439;
     color: #111;
-    padding: 0 20px;
-    height: 44px; /* Fixed height to prevent stretching */
-    min-height: 44px;
-    border-radius: 50px;
-    font-weight: 800;
+    height: 45px;
+    border-radius: 10px;
+    font-weight: 700;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: background 0.2s;
     border: none;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     text-align: center;
     width: 100%;
-    max-width: 250px;
-    margin: 8px auto;
+    margin: 10px 0;
     box-sizing: border-box;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 177, 20, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap; /* Prevents text wrapping which could increase height */
 }
 
-.paypal-btn img {
+.paypal-btn svg {
     vertical-align: middle;
-    margin-right: 6px;
+    margin-right: 8px;
     width: 22px;
+    height: 22px;
 }
 
 .paypal-btn:hover {
@@ -1268,21 +1258,18 @@ footer a {
     gap: 8px;
     background: #000;
     color: #fff !important;
-    padding: 0 20px;
-    height: 44px;
-    min-height: 44px;
-    border-radius: 50px;
+    padding: 12px;
+    height: 45px;
+    border-radius: 10px;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s;
     border: none;
     cursor: pointer;
     width: 100%;
-    max-width: 250px;
-    margin: 8px auto;
-    font-size: 0.85rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    white-space: nowrap;
+    margin: 10px 0;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .credit-btn:hover {
@@ -1321,24 +1308,21 @@ footer a {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     background: #000000;
     color: #f3ba2f !important;
-    padding: 0 20px;
-    height: 44px;
-    min-height: 44px;
-    border-radius: 50px;
+    padding: 12px;
+    height: 45px;
+    border-radius: 10px;
     font-weight: 800;
     text-decoration: none;
     transition: all 0.3s;
-    border: 1px solid #f3ba2f;
+    border: 2px solid #f3ba2f;
     cursor: pointer;
     width: 100%;
-    max-width: 250px;
-    margin: 8px auto;
-    font-size: 0.8rem;
+    margin: 10px 0;
+    font-size: 1rem;
     text-transform: uppercase;
-    white-space: nowrap;
 }
 
 .binance-btn:hover {
