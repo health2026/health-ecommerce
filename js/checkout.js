@@ -78,8 +78,15 @@ function renderStandardButtons(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    // Clear container and show loading state
-    container.innerHTML = '<div style="text-align:center; padding:10px; color:#94a3b8;">Loading Secure Payment...</div>';
+    // Clear container and show loading state with translations
+    container.innerHTML = `
+        <div id="payment-loader" style="text-align:center; padding:20px; color:#22c55e;">
+            <div class="loader-spinner" style="border: 3px solid rgba(34,197,94,0.1); border-top: 3px solid #22c55e; border-radius: 50%; width: 28px; height: 28px; margin: 0 auto 15px auto; animation: spin 1s linear infinite;"></div>
+            <p style="margin:0; font-size:1rem; font-weight:600;">Secure Checkout Loading...</p>
+            <p style="margin:5px 0 0 0; font-size:0.85rem; opacity:0.8;">جاري تحميل بوابة الدفع الآمنة الخاص بالبطاقة...</p>
+        </div>
+        <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+    `;
 
     let attempts = 0;
     const maxAttempts = 20;
