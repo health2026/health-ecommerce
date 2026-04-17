@@ -73,8 +73,8 @@ startCountdown();
 
 // Standard PayPal Link Generator (No API needed)
 function getPayPalEmailLink(itemName, amount) {
-    const business = "abdellah.rhiat@gmail.com";
-    return `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${encodeURIComponent(itemName)}&amount=${amount}&currency_code=USD`;
+    // Redirects directly to the user's PayPal.me link with the required amount in USD
+    return `https://paypal.me/health2026/${amount}USD`;
 }
 
 function initPayPalButton(itemName, amount, btnId) {
@@ -105,59 +105,8 @@ function renderStandardButtons(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    // Clear container and show loading state with translations
-    container.innerHTML = `
-        <div id="payment-loader" style="text-align:center; padding:20px; color:#22c55e;">
-            <div class="loader-spinner" style="border: 3px solid rgba(34,197,94,0.1); border-top: 3px solid #22c55e; border-radius: 50%; width: 28px; height: 28px; margin: 0 auto 15px auto; animation: spin 1s linear infinite;"></div>
-            <p style="margin:0; font-size:1rem; font-weight:600;">Secure Checkout Loading...</p>
-            <p style="margin:5px 0 0 0; font-size:0.85rem; opacity:0.8;">جاري تحميل بوابة الدفع الآمنة الخاص بالبطاقة...</p>
-        </div>
-        <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
-    `;
-
-    let attempts = 0;
-    const maxAttempts = 20;
-
-    const render = () => {
-        if (window.paypal && window.paypal.Buttons) {
-            container.innerHTML = '';
-            window.paypal.Buttons({
-                style: {
-                    layout: 'vertical',
-                    color: 'gold',
-                    shape: 'rect',
-                    label: 'pay'
-                },
-                createOrder: function (data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: itemName,
-                            amount: { currency_code: "USD", value: amount }
-                        }]
-                    });
-                },
-                onApprove: function (data, actions) {
-                    return actions.order.capture().then(function (details) {
-                        window.location.href = "thanks.html";
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal Error:', err);
-                    renderFallbackButton(container, itemName, amount);
-                }
-            }).render(btnId).catch(err => {
-                console.error('Render failure:', err);
-                renderFallbackButton(container, itemName, amount);
-            });
-        } else if (attempts < maxAttempts) {
-            attempts++;
-            setTimeout(render, 500);
-        } else {
-            renderFallbackButton(container, itemName, amount);
-        }
-    };
-
-    render();
+    // Directly render the custom PayPal.me button link 
+    renderFallbackButton(container, itemName, amount);
 }
 
 function initOtherPayments(itemName, amount, payeerBtnId, binanceBtnId) {
