@@ -96,24 +96,12 @@ function renderFallbackButton(container, itemName, amount) {
 // Re-using initPayPalButton for all specialized integrations
 
 function initAdvancedCardFields(itemName, amount, btnId) {
-    // We simplified this to ensure maximum compatibility. 
-    // Standard PayPal buttons ALWAYS include a "Debit or Credit Card" option.
-    renderStandardButtons(itemName, amount, btnId);
-}
-
-function renderStandardButtons(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    if (window.paypal) {
-        container.innerHTML = ''; // Clear redirect link
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'gold',
-                shape: 'rect',
-                label: 'pay'
-            },
+    // Check if card-fields component is available in SDK
+    if (window.paypal && paypal.CardFields) {
+        const cardFields = paypal.CardFields({
             createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
@@ -128,13 +116,51 @@ function renderStandardButtons(itemName, amount, btnId) {
                 });
             },
             onError: function (err) {
-                console.error('PayPal Error:', err);
-                renderFallbackButton(container, itemName, amount);
+                console.error('Card Fields Error:', err);
+                // Fallback if needed
             }
-        }).render(btnId);
+        });
+
+        if (cardFields.isEligible()) {
+            const nameField = cardFields.NameField();
+            const numberField = cardFields.NumberField();
+            const expiryField = cardFields.ExpiryField();
+            const cvvField = cardFields.CVVField();
+
+            // We assume the containers exist in the HTML nearby
+            // If they don't, we will render standard buttons as fallback
+            try {
+                numberField.render('#card-number-container');
+                expiryField.render('#card-expiry-container');
+                cvvField.render('#card-cvv-container');
+
+                const submitBtn = document.querySelector('#card-field-submit');
+                if (submitBtn) {
+                    submitBtn.onclick = () => {
+                        cardFields.submit().catch(err => {
+                            console.error('Submit Error:', err);
+                            alert('Payment failed. Please check your card details.');
+                        });
+                    };
+                }
+            } catch (e) {
+                console.warn('Containers not found, falling back to standard buttons');
+                renderStandardButtons(itemName, amount, btnId);
+            }
+        } else {
+            renderStandardButtons(itemName, amount, btnId);
+        }
     } else {
-        renderFallbackButton(container, itemName, amount);
+        renderStandardButtons(itemName, amount, btnId);
     }
+}
+
+function renderStandardButtons(itemName, amount, btnId) {
+    const container = document.querySelector(btnId);
+    if (!container) return;
+
+    // We use the direct paypal.me link because it shows the amount transparently to the user
+    renderFallbackButton(container, itemName, amount);
 }
 
 function initOtherPayments(itemName, amount, cardBtnId, binanceBtnId) {

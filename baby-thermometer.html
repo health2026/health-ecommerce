@@ -18,8 +18,7 @@
     <link rel="stylesheet" href="css/style.css?v=30.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- PayPal SDK -->
-    <script
-        src="https://www.paypal.com/sdk/js?client-id=AcbBKz68JfFF5dYLJc0UUeRbBu5LF810Xa3vvMCJ-W9P0QVvUJ2PDTjXYoEUZZTCeIizq5Wqx2LppUG6&currency=USD&components=buttons"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcbBKz68JfFF5dYLJc0UUeRbBu5LF810Xa3vvMCJ-W9P0QVvUJ2PDTjXYoEUZZTCeIizq5Wqx2LppUG6&currency=USD&components=buttons,card-fields"></script>
     <style>
         .checkout-container {
             background: #0f172a !important;
@@ -373,9 +372,26 @@
                             </svg>
                             <span>BY BINANCE PAY | باينانس</span>
                         </button>
-                        <button class="credit-btn" id="card-btn-thermometer">
-                            <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Card">
-                            <span>BY BANK CARD | بالبطاقة البنكية</span>
+                    </div>
+
+                    <div id="card-form-thermometer" class="native-card-form" style="margin-top: 20px; border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.02);">
+                        <div class="input-grp">
+                            <label>Card Number | رقم البطاقة</label>
+                            <div id="card-number-container" class="card-field-input"></div>
+                        </div>
+                        <div class="input-row" style="display: flex; gap: 15px;">
+                            <div class="input-grp" style="flex: 1;">
+                                <label>Expiry | تاريخ الانتهاء</label>
+                                <div id="card-expiry-container" class="card-field-input"></div>
+                            </div>
+                            <div class="input-grp" style="flex: 1;">
+                                <label>CVV | الرمز السري</label>
+                                <div id="card-cvv-container" class="card-field-input"></div>
+                            </div>
+                        </div>
+                        <button id="card-field-submit" class="secure-pay" style="width: 100%; margin-top: 10px;">
+                            <span>Confirm Payment | تأكيد الدفع</span>
+                            <span class="secure-badge">🔒 Direct Card Checkout</span>
                         </button>
                     </div>
 
