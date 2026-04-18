@@ -13,7 +13,7 @@
             --accent-new: #10b981;
             --accent-glow-new: rgba(16, 185, 129, 0.4);
         }
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background 0.4s, color 0.4s; }
         h1, h2, h3, .logoText { font-family: 'Outfit', sans-serif; }
         
         .hero-premium {
@@ -324,10 +324,14 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Initialize Checkout
-        if (window.initAdvancedCardFields) {
-            initAdvancedCardFields('Zenith Detox Premium', '49.00', '#card-button-container');
-        }
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light');
+            themeToggle.textContent = body.classList.contains('light') ? '🌙' : '☀️';
+        });
     </script>
 </body>
 </html>
