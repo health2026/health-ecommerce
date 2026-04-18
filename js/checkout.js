@@ -5,40 +5,31 @@ function initAdvancedCardFields(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    // 1. Static Layout to prevent white spaces
-    container.innerHTML = `
-        <div class="secure-checkout-panel" style="padding: 20px; border: 2px solid #22c55e; border-radius: 15px; background: #0f172a; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <h3 style="color: #22c55e; margin: 0; font-size: 1.2rem;">${itemName}</h3>
-                <div style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-top: 5px;">$${amount}</div>
-            </div>
-
-            <!-- CARD BUTTON CONTAINER (SDK BLACK BUTTON) -->
-            <div id="sd-card-container" style="min-height: 50px; margin-bottom: 15px;"></div>
-
-            <!-- PAYPAL BUTTON (DIRECT PAYPAL ME LINK AS REQUESTED) -->
-            <a href="https://paypal.me/health2026/${amount}USD" 
-               target="_blank" 
-               style="display: flex; align-items: center; justify-content: center; background: #ffc439; color: #111; text-decoration: none; padding: 15px; border-radius: 10px; border: 2px solid #e2a400; font-weight: 700; gap: 10px; height: 18px;">
-                <img src="https://img.icons8.com/color/48/000000/paypal.png" width="24">
-                <span>PAY $${amount} VIA PAYPAL.ME</span>
-            </a>
-
-            <div style="margin-top: 15px; text-align: center;">
-                <img src="https://img.icons8.com/ios-filled/50/22c55e/shield.png" width="14" style="vertical-align: middle;">
-                <span style="color: #22c55e; font-size: 0.70rem; font-weight: 600;">SECURE SSL ENCRYPTED CHECKOUT</span>
-            </div>
-        </div>
-    `;
-
     // 2. Render the Black Card button (which you said was working)
     if (window.paypal) {
         paypal.Buttons({
             fundingSource: paypal.FUNDING.CARD,
-            style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay', height: 50 },
-            createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount }, description: itemName }] }),
-            onApprove: (data, actions) => actions.order.capture().then(() => window.location.href = 'thanks.html')
-        }).render('#sd-card-container');
+            style: { 
+                layout: 'vertical', 
+                color: 'black', 
+                shape: 'rect', 
+                label: 'pay', 
+                height: 50 
+            },
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: amount },
+                        description: itemName
+                    }]
+                });
+            },
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(() => {
+                    window.location.href = 'thanks.html';
+                });
+            }
+        }).render(btnId); // Render directly to the ID provided
     }
 }
 
