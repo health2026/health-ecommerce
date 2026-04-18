@@ -164,7 +164,6 @@ function initAdvancedCardFields(itemName, amount, btnId) {
 
         // Standard PayPal Button - Using the Legacy Direct URL which ALWAYS shows the amount and product name upfront
         const paypalContainer = document.getElementById('paypal-fallback-container');
-        const businessEmail = 'rhiatabdellah712@gmail.com'; 
         if (paypalContainer) {
             const legacyUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(businessEmail)}&item_name=${encodeURIComponent(itemName)}&amount=${amount}&currency_code=USD`;
             paypalContainer.innerHTML = `
@@ -177,16 +176,28 @@ function initAdvancedCardFields(itemName, amount, btnId) {
     }
 
     function setupLegacyUI() {
-        // If Advanced fields are not available, clicking the button uses the Direct PayPal URL
-        // This is THE MOST RELIABLE way to show the amount and allow card payment
-        document.getElementById('card-pay-btn-final').onclick = triggerLegacyFallback;
+        // If Advanced fields are not available, we show a dedicated Card button
+        // that is much better at allowing Guest Checkout (no account needed) than a raw link.
+        const cardArea = document.getElementById('card-number-field').parentElement.parentElement;
+        cardArea.innerHTML = `
+            <div style="text-align: center; padding: 20px; border: 1px dashed #22c55e; border-radius: 15px;">
+                <p style="color: #fff; margin-bottom: 15px; font-size: 0.9rem;">💳 الدفع المباشر بالبطاقة (بدون حساب بايبال)<br>Direct Card Payment (No account needed)</p>
+                <div id="fallback-card-button-container"></div>
+            </div>
+        `;
+        
+        if (window.paypal) {
+            paypal.Buttons({
+                fundingSource: paypal.FUNDING.CARD,
+                style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay', height: 50 },
+                createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount }, description: itemName }] }),
+                onApprove: (data, actions) => actions.order.capture().then(() => window.location.href = 'thanks.html')
+            }).render('#fallback-card-button-container');
+        }
     }
 
     function triggerLegacyFallback() {
-        const btn = document.getElementById('card-pay-btn-final');
-        btn.innerHTML = '<span>Redirecting... | جاري التحويل...</span>';
-        const fallbackUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(businessEmail)}&item_name=${encodeURIComponent(itemName)}&amount=${amount}&currency_code=USD&solution_type=Sole&landing_page=Billing`;
-        window.location.href = fallbackUrl;
+        setupLegacyUI();
     }
 }
 
