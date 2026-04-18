@@ -162,12 +162,16 @@ function initAdvancedCardFields(itemName, amount, btnId) {
             setupLegacyUI();
         }
 
-        // Standard PayPal Button Fallback
-        paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-            createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount }, description: itemName }] }),
-            onApprove: (data, actions) => actions.order.capture().then(() => window.location.href = 'thanks.html')
-        }).render('#paypal-fallback-container');
+        // Standard PayPal Button - Using the direct PayPal.me link for total transparency as requested
+        const paypalContainer = document.getElementById('paypal-fallback-container');
+        if (paypalContainer) {
+            paypalContainer.innerHTML = `
+                <a href="https://paypal.me/health2026/${amount}USD" target="_blank" style="display: flex; align-items: center; justify-content: center; background: #ffc439; color: #111; height: 55px; border-radius: 10px; text-decoration: none; font-weight: 700; gap: 10px; border: 1px solid #e2a400;">
+                    <img src="https://img.icons8.com/color/48/000000/paypal.png" width="24">
+                    <span>PAY $${amount} VIA PAYPAL</span>
+                </a>
+            `;
+        }
     }
 
     function setupLegacyUI() {
