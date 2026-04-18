@@ -105,8 +105,36 @@ function renderStandardButtons(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    // Directly render the custom PayPal.me button link 
-    renderFallbackButton(container, itemName, amount);
+    if (window.paypal) {
+        container.innerHTML = ''; // Clear redirect link
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'gold',
+                shape: 'rect',
+                label: 'pay'
+            },
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: amount },
+                        description: itemName
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    window.location.href = 'thanks.html';
+                });
+            },
+            onError: function (err) {
+                console.error('PayPal Error:', err);
+                renderFallbackButton(container, itemName, amount);
+            }
+        }).render(btnId);
+    } else {
+        renderFallbackButton(container, itemName, amount);
+    }
 }
 
 function initOtherPayments(itemName, amount, cardBtnId, binanceBtnId) {
@@ -116,10 +144,34 @@ function initOtherPayments(itemName, amount, cardBtnId, binanceBtnId) {
     }
 
     const cardBtn = document.querySelector(cardBtnId);
-    if (cardBtn) {
-        cardBtn.onclick = () => {
-            window.open(getPayPalEmailLink(itemName, amount), '_blank');
-        };
+    if (cardBtn && window.paypal) {
+        // We replace the custom card button with a real PayPal Debit/Credit button
+        cardBtn.innerHTML = '';
+        cardBtn.style.background = 'transparent';
+        cardBtn.style.border = 'none';
+        cardBtn.style.padding = '0';
+        
+        paypal.Buttons({
+            fundingSource: paypal.FUNDING.CARD,
+            style: {
+                layout: 'vertical',
+                shape: 'rect',
+                height: 55
+            },
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: amount },
+                        description: itemName
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    window.location.href = 'thanks.html';
+                });
+            }
+        }).render(cardBtnId);
     }
 }
 
