@@ -99,26 +99,61 @@ function initAdvancedCardFields(itemName, amount, btnId) {
     const container = document.querySelector(btnId);
     if (!container) return;
 
-    // To ensure the amount is ALWAYS visible immediately, we use the direct PayPal.me link
-    // which shows your profile and the amount before the user even logs in.
+    // We create a dedicated section for Bank Card that is 100% reliable
     container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-            <a href="https://paypal.me/health2026/${amount}USD" target="_blank" class="paypal-btn" style="background: #ffc439; color: #111; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; border: 2px solid #e2a400;">
-                <img src="https://img.icons8.com/color/48/000000/paypal.png" width="24" height="24">
-                <span>PAY $${amount} WITH PAYPAL</span>
-            </a>
+        <div style="border: 2px solid #22c55e; padding: 25px; border-radius: 20px; background: #0f172a; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h4 style="color: #fff; margin-bottom: 10px; font-size: 1.1rem; font-weight: 700;">💳 الدفع بالبطاقة البنكية | Card Payment</h4>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                    <img src="https://img.icons8.com/color/48/000000/visa.png" width="35">
+                    <img src="https://img.icons8.com/color/48/000000/mastercard.png" width="35">
+                    <img src="https://img.icons8.com/color/48/000000/amex.png" width="35">
+                    <img src="https://img.icons8.com/color/48/000000/maestro.png" width="35">
+                </div>
+                <p style="color: #94a3b8; font-size: 0.85rem;">ادفع الآن بأمان باستخدام بطاقتك البنكية مباشرة</p>
+                <p style="color: #22c55e; font-weight: 700; margin-top: 5px; font-size: 1rem;">Total: $${amount}</p>
+            </div>
             
-            <a href="https://paypal.me/health2026/${amount}USD" target="_blank" class="credit-btn" style="background: #1e293b; color: #fff; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; border: 2px solid #334155;">
-                <img src="https://img.icons8.com/color/48/000000/visa.png" width="24" height="24">
-                <img src="https://img.icons8.com/color/48/000000/mastercard.png" width="24" height="24">
-                <span>PAY $${amount} WITH BANK CARD</span>
-            </a>
+            <div id="direct-card-button-container" style="min-height: 55px;"></div>
+            
+            <div style="text-align: center; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <span style="color: #94a3b8; font-size: 0.8rem;">أو الدفع عبر حساب بايبال | OR PAY WITH PAYPAL</span>
+                <div id="paypal-buttons-standard-fallback" style="margin-top: 15px;"></div>
+            </div>
         </div>
     `;
-    
-    // Hide the direct card entry form as it was causing the "generic login" or white space issues
-    const cardForm = document.querySelector('.native-card-form');
-    if (cardForm) cardForm.style.display = 'none';
+
+    if (window.paypal) {
+        // 1. Render the Dedicated CARD Button (Black button)
+        // This is the most compatible way to ensure Card Payment is "Activated"
+        paypal.Buttons({
+            fundingSource: paypal.FUNDING.CARD,
+            style: {
+                layout: 'vertical',
+                color: 'black',
+                shape: 'rect',
+                label: 'pay',
+                height: 55
+            },
+            createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount }, description: itemName }] }),
+            onApprove: (data, actions) => actions.order.capture().then(() => window.location.href = 'thanks.html'),
+            onError: (err) => console.error('Card Button Error:', err)
+        }).render('#direct-card-button-container');
+
+        // 2. Render the standard PayPal button (Yellow button) below as fallback
+        paypal.Buttons({
+            fundingSource: paypal.FUNDING.PAYPAL,
+            style: {
+                layout: 'vertical',
+                color: 'gold',
+                shape: 'rect',
+                label: 'paypal',
+                height: 55
+            },
+            createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: amount }, description: itemName }] }),
+            onApprove: (data, actions) => actions.order.capture().then(() => window.location.href = 'thanks.html')
+        }).render('#paypal-buttons-standard-fallback');
+    }
 }
 
 function renderStandardButtons(itemName, amount, btnId) {
