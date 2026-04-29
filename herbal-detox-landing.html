@@ -3,84 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith Detox - Premium Herbal Cleanse | Health2026</title>
-    <link rel="stylesheet" href="css/style.css?v=707.0">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Zenith Detox | Health2026 Premium</title>
+    <link rel="stylesheet" href="css/style.css?v=999">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://www.paypal.com/sdk/js?client-id=AcbBKz68JfFF5dYLJc0UUeRbBu5LF810Xa3vvMCJ-W9P0QVvUJ2PDTjXYoEUZZTCeIizq5Wqx2LppUG6&currency=USD&components=buttons,card-fields"></script>
     <style>
-        :root { --accent-new: #10b981; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background 0.4s; margin: 0; overflow-x: hidden; }
-        h1, h2, h3, .logoText { font-family: 'Outfit', sans-serif; margin: 0; }
-        .landing-header { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: var(--bg); border-bottom: 1px solid var(--card-border); padding: 10px 5%; backdrop-filter: blur(15px); }
-        .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .hero-premium { min-height: 80vh; display: flex; align-items: center; padding: 120px 5% 60px; gap: 40px; max-width: 1200px; margin: 0 auto; }
-        .hero-content { flex: 1.2; } .hero-image { flex: 1; } .hero-image img { width: 100%; border-radius: 30px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-        .checkout-box { background: var(--card); padding: 30px; border-radius: 30px; border: 2px solid var(--accent-new); }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); margin: 50px 0; border: 1px solid rgba(255,255,255,0.05); }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        @media (max-width: 768px) { .hero-premium { flex-direction: column; text-align: center; padding-top: 100px; } .grid-2 { grid-template-columns: 1fr !important; } .hero-content { order: 1; } .hero-image { order: 2; h1 { font-size: 3rem !important; } } }
-        .thumb-img { width: 80px; height: 80px; border-radius: 15px; cursor: pointer; object-fit: cover; border: 2px solid transparent; transition: all 0.2s; opacity: 0.7; }
-        .thumb-img:hover, .thumb-img.active { opacity: 1; border-color: var(--accent-new); }
+        :root { --accent-new: #10b981; --accent-light: rgba(16, 185, 129, 0.15); }
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
+        
+        .landing-header { 
+            position: fixed; top: 0; left: 0; right: 0; z-index: 10000; 
+            background: rgba(3, 10, 5, 0.7); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border); padding: 15px 5%;
+        }
+        .header-container { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .hero-premium { 
+            min-height: 100vh; display: flex; align-items: center; padding: 140px 5% 80px; gap: 60px; 
+            max-width: 1300px; margin: 0 auto; position: relative;
+        }
+        .hero-content { flex: 1.1; }
+        .hero-image { flex: 0.9; position: sticky; top: 120px; }
+        
+        .badge-premium {
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; 
+            background: var(--accent-light); color: var(--accent-new); 
+            border-radius: 100px; font-weight: 700; font-size: 0.85rem; 
+            margin-bottom: 25px; border: 1px solid rgba(16, 185, 129, 0.3);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        
+        h1 { font-family: 'Outfit', sans-serif; font-size: clamp(3rem, 10vw, 5.5rem); line-height: 1.05; font-weight: 800; margin-bottom: 25px; letter-spacing: -2px; }
+        .hero-p { font-size: 1.35rem; color: var(--text-muted); margin-bottom: 45px; line-height: 1.7; max-width: 600px; }
+        
+        .cta-group { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .btn-main { 
+            background: var(--accent-new); color: white; padding: 22px 55px; border-radius: 20px; 
+            text-decoration: none; font-weight: 800; font-size: 1.25rem; 
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.3); transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: none; cursor: pointer;
+        }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(16, 185, 129, 0.4); filter: brightness(1.1); }
+        
+        .main-img-wrap {
+            width: 100%; border-radius: 40px; overflow: hidden; 
+            box-shadow: 0 50px 100px rgba(0,0,0,0.6); position: relative; 
+            padding-bottom: 100%; background: var(--card); border: 1px solid var(--card-border);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .main-img-wrap:hover { transform: scale(1.02); }
+        .main-img-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
+
+        .trust-pills { display: flex; gap: 30px; margin-top: 40px; opacity: 0.7; }
+        .pill { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; }
+
+        .checkout-box { 
+            background: rgba(255,255,255,0.02); backdrop-filter: blur(30px); 
+            padding: 40px; border-radius: 40px; border: 1px solid var(--card-border);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-premium { flex-direction: column; text-align: center; padding-top: 120px; }
+            .hero-image { position: relative; top: 0; width: 100%; max-width: 600px; margin: 0 auto; }
+            .hero-p { margin-left: auto; margin-right: auto; }
+            .cta-group { justify-content: center; }
+            .trust-pills { justify-content: center; }
+        }
     </style>
 </head>
 <body>
     <header class="landing-header">
         <div class="header-container">
-            <a href="index.html" class="cssLogo" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
-                <div style="background: var(--accent-new); width: 35px; height: 35px; border-radius: 10px; display: flex; align-items: center; justify-content: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg></div>
-                <div class="logoText" style="font-weight: 800; font-size: 1.4rem; color: var(--text);">Health<span style="color: var(--accent-new);">2026</span></div>
+            <a href="index.html" class="cssLogo" style="text-decoration: none; display: flex; align-items: center; gap: 12px;">
+                <div style="background: var(--accent-new); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg></div>
+                <div class="logoText" style="font-weight: 800; font-size: 1.6rem; color: var(--text);">Health<span style="color: var(--accent-new);">2026</span></div>
             </a>
-            <button id="themeToggle" style="background: var(--card); border: 1px solid var(--card-border); border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
+            <button id="themeToggle" style="background: var(--card); border: 1px solid var(--card-border); border-radius: 50%; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><svg id="themeIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/></svg></button>
         </div>
     </header>
-    <main style="padding: 0 5%;">
+
+    <main>
         <section class="hero-premium">
-            <div class="hero-content">
-                <h1 style="font-size: 4.5rem; margin-bottom: 25px;">Zenith <span style="color: var(--accent-new);">Detox</span></h1>
-                <p style="font-size: 1.4rem; color: #94a3b8; margin-bottom: 40px;">Professional grade herbal rejuvenation.</p>
-                <a href="#order" class="btn" style="background: var(--accent-new); padding: 20px 50px; border-radius: 12px; color: white; text-decoration: none; font-weight: 800; display: inline-block;">START DETOX</a>
-            </div>
-            <div class="hero-image" style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="width: 100%; border-radius: 30px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6); position: relative; padding-bottom: 100%;">
-                    <img id="main-image-detox" src="images/herbal_detox_product.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease;">
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+                <div class="badge-premium">🌿 100% Organic Rejuvenation</div>
+                <h1>Zenith <span style="color: var(--accent-new);">Detox Premium</span></h1>
+                <p class="hero-p">The ultimate herbal cleanse. Elevate your wellness with Zenith Detox, designed for natural energy and total body rejuvenation.</p>
+                
+                <div class="cta-group">
+                    <a href="#order" class="btn-main">Start Your Detox — $49.00</a>
                 </div>
-                <div style="display: flex; gap: 15px; overflow-x: auto; padding: 5px 0; justify-content: center;">
-                    <img src="images/herbal_detox_product.png" onclick="document.getElementById('main-image-detox').src=this.src; document.querySelectorAll('.thumb-detox').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-detox active">
-                    <img src="images/detox_1.png" onclick="document.getElementById('main-image-detox').src=this.src; document.querySelectorAll('.thumb-detox').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-detox">
-                    <img src="images/detox_2.png" onclick="document.getElementById('main-image-detox').src=this.src; document.querySelectorAll('.thumb-detox').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-detox">
-                    <img src="images/herbal_detox_lifestyle.png" onclick="document.getElementById('main-image-detox').src=this.src; document.querySelectorAll('.thumb-detox').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-detox">
+
+                <div class="trust-pills">
+                    <div class="pill">✨ Pure Ingredients</div>
+                    <div class="pill">✨ Lab Tested</div>
+                    <div class="pill">✨ Fast Shipping</div>
+                </div>
+            </div>
+
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="1000">
+                <div class="main-img-wrap">
+                    <img id="main-image-detox" src="images/herbal_detox_product.png">
+                </div>
+                <div class="thumb-container">
+                    <img src="images/herbal_detox_product.png" class="thumb-img active" onclick="changeImage(this.src, this)">
+                    <img src="images/detox_1.png" class="thumb-img" onclick="changeImage(this.src, this)">
+                    <img src="images/detox_2.png" class="thumb-img" onclick="changeImage(this.src, this)">
                 </div>
             </div>
         </section>
 
         <!-- VIDEO SECTION -->
-        <section style="max-width: 1000px; margin: 40px auto; text-align: center;">
-            <h2 style="margin-bottom: 30px;">Premium <span style="color: var(--accent-new);">Rejuvenation</span></h2>
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/a9WihdD_ivc" allowfullscreen></iframe>
+        <section style="padding: 100px 5%; background: rgba(255,255,255,0.01);">
+            <div style="max-width: 1000px; margin: 0 auto; text-align: center;" data-aos="fade-up">
+                <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 40px;">Zenith <span style="color: var(--accent-new);">Rejuvenation</span></h2>
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/a9WihdD_ivc" allowfullscreen></iframe>
+                </div>
             </div>
         </section>
 
-        <section id="order" style="padding: 80px 0;">
-            <div class="grid-2" style="max-width: 1200px; margin: 0 auto;">
-                <div><h2 style="font-size: 3rem; margin-bottom: 20px;">Secure Your Supply</h2><div style="font-size: 3.5rem; font-weight: 800; color: white;">$49.00</div></div>
-                <div class="checkout-box">
-                    <h3 style="text-align: center; color: white; margin-bottom: 20px;">Secure Order</h3>
-                    <a href="https://paypal.me/health2026/49.00USD" target="_blank" style="display: block; background: #ffc439; text-align: center; padding: 15px; border-radius: 12px; font-weight: 900; color: #111; text-decoration: none; margin-bottom: 10px;">PAYPAL</a>
-                    <button id="binanceBtn" style="width:100%; padding:15px; border-radius:12px; background:#f3ba2f; border:none; color:#111; font-weight:900; cursor:pointer; margin-bottom:10px;">BINANCE</button>
-                    <div id="card-btn-container"></div>
+        <!-- CHECKOUT SECTION -->
+        <section id="order" style="padding: 120px 5%;">
+            <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;" class="grid-2">
+                <div data-aos="fade-right">
+                    <h2 style="font-size: 3.5rem; margin-bottom: 20px;">Renew Your Energy</h2>
+                    <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px;">Professional grade herbal rejuvenation. Join the wellness revolution.</p>
+                    <div style="font-size: 4rem; font-weight: 800; color: var(--accent-new);">$49.00 <span style="font-size: 1.5rem; text-decoration: line-through; color: #64748b; opacity: 0.5;">$89.00</span></div>
+                </div>
+                <div class="checkout-box" data-aos="fade-left">
+                    <h3 style="text-align: center; font-size: 2rem; margin-bottom: 30px;">Secure Checkout</h3>
+                    <div id="payment-options">
+                        <a href="https://paypal.me/health2026/49.00USD" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #ffc439; padding: 20px; border-radius: 18px; font-weight: 900; color: #111; text-decoration: none; margin-bottom: 15px; font-size: 1.1rem;">
+                            PAY WITH PAYPAL
+                        </a>
+                        <button id="binanceBtn" style="width:100%; padding:20px; border-radius:18px; background:#f3ba2f; border:none; color:#111; font-weight:900; cursor:pointer; margin-bottom:15px; font-size: 1.1rem;">
+                            PAY WITH BINANCE
+                        </button>
+                        <div id="card-btn-container"></div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/checkout.js?v=999"></script>
     <script>
+        AOS.init({ once: true });
+        
+        function changeImage(src, el) {
+            const main = document.getElementById('main-image-detox');
+            main.style.opacity = '0.3';
+            setTimeout(() => {
+                main.src = src;
+                main.style.opacity = '1';
+            }, 250);
+            document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+            el.classList.add('active');
+        }
+
         if (window.initAdvancedCardFields) { initAdvancedCardFields('Zenith Detox', '49.00', '#card-btn-container'); }
         if (window.initOtherPayments) { initOtherPayments('Zenith Detox', '49.00', '#card-btn-container', '#binanceBtn'); }
-        const themeToggle = document.getElementById('themeToggle'); const themeIcon = document.getElementById('themeIcon');
-        themeToggle.addEventListener('click', () => { document.body.classList.toggle('light'); const isLight = document.body.classList.contains('light'); themeIcon.innerHTML = isLight ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>' : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/>'; });
+        
+        const themeToggle = document.getElementById('themeToggle'); 
+        const themeIcon = document.getElementById('themeIcon');
+        themeToggle.addEventListener('click', () => { 
+            document.body.classList.toggle('light'); 
+            const isLight = document.body.classList.contains('light'); 
+            themeIcon.innerHTML = isLight ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>' : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42m12.72-12.72l1.42-1.42"/>'; 
+        });
     </script>
 </body>
 </html>
