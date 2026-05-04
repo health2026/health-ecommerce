@@ -1,0 +1,1398 @@
+:root {
+  --bg: #0b0f19;
+  --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #1a2235 100%);
+  --card: rgba(18, 24, 38, 0.6);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --text: #e6edf3;
+  --text-muted: #a0aec0;
+  --accent: #4da3ff;
+  --accent-hover: #7bbaff;
+}
+
+.light {
+  --bg: #f8fafc;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --card: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(0, 0, 0, 0.05);
+  --text: #0f172a;
+  --text-muted: #475569;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text);
+  margin: 0;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Typography */
+h1, h2, h3 {
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 50px;
+  background: -webkit-linear-gradient(45deg, var(--accent), #90c2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  color: var(--text-muted);
+}
+
+/* Header & Navigation */
+header {
+  background: rgba(11, 15, 25, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--card-border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.light header {
+  background: rgba(248, 250, 252, 0.7);
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 18px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  gap: 0;
+}
+
+.cssLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: transform 0.3s;
+  margin-right: auto;
+}
+
+.cssLogo:hover {
+  transform: scale(1.04);
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4da3ff 0%, #0061d5 100%);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  box-shadow: 0 0 18px rgba(77, 163, 255, 0.55);
+  transition: box-shadow 0.3s;
+}
+
+.cssLogo:hover .logoIcon {
+  box-shadow: 0 0 28px rgba(77, 163, 255, 0.85);
+}
+
+.logoHighlight {
+  color: var(--accent);
+}
+
+
+ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+li a {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+
+li a:hover {
+  color: var(--accent);
+}
+
+#themeToggle {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  font-size: 1.2rem;
+  padding: 8px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#themeToggle:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+/* Base sections container */
+section {
+  padding: 80px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Hero */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  position: relative;
+  max-width: 100%;
+  background-image: url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1920&q=80'); /* Beautiful healthy fit family */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  color: #1a202c; /* Dark text for light background */
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0%, /* minimal haze for clarity */
+    rgba(255, 255, 255, 0.10) 60%,
+    rgba(255, 255, 255, 0.40) 100%
+  );
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+  color: #0f172a;
+}
+
+.hero h3 {
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: #475569;
+  max-width: 700px;
+  margin-bottom: 30px;
+}
+
+.hero p {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  font-size: 1.15rem;
+  color: #334155;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff !important;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid transparent;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(77, 163, 255, 0.3);
+}
+
+.btn.outline {
+  background: transparent;
+  color: var(--accent) !important;
+  border-color: var(--accent);
+}
+
+.btn.outline:hover {
+  background: rgba(77, 163, 255, 0.1);
+  box-shadow: none;
+}
+
+/* Section Containers & Grids */
+.aboutContainer {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.aboutContainer img {
+  width: 350px;
+  flex-shrink: 0; 
+}
+
+.aboutContainer p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Consistent Grids */
+.skillGrid, .serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.card, .projectCard {
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 35px 25px;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3, .projectCard h3 {
+  margin-bottom: 15px;
+}
+
+.card:hover, .projectCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  border-color: var(--accent);
+}
+
+.projectCard a {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 15px;
+  color: var(--accent);
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.projectCard a:hover {
+  opacity: 0.8;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.timeline div {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  padding: 30px 40px;
+  border-radius: 16px;
+  border-left: 4px solid var(--accent);
+  transition: transform 0.3s;
+}
+
+.timeline div:hover {
+  transform: translateX(10px);
+}
+
+.timeline ul {
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 20px;
+  list-style-type: disc;
+  margin-top: 15px;
+  align-items: flex-start;
+}
+
+.timeline ul li {
+  color: var(--text-muted);
+}
+
+/* Career */
+.career {
+  text-align: center;
+}
+
+.career p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+input, textarea {
+  padding: 15px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.2);
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  width: 100%;
+}
+
+button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Socials & Footer */
+.socials {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.socials a {
+  color: var(--text);
+  font-weight: 600;
+  padding: 10px 24px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 30px;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+}
+
+.socials a:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+footer {
+  text-align: center;
+  padding: 40px 5%;
+  border-top: 1px solid var(--card-border);
+}
+
+footer a {
+  color: var(--accent);
+  margin-top: 15px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+/* ============================================
+   MOBILE RESPONSIVENESS - FULL OVERHAUL
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .skillGrid, .serviceGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .projectGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .storeCard img {
+    height: 220px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  /* --- Navigation Overhaul --- */
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 4%;
+    gap: 15px;
+    position: relative;
+  }
+
+  .cssLogo {
+    margin: 0 auto;
+    font-size: 1.6rem;
+    flex: 0 0 auto;
+    z-index: 10;
+  }
+
+  #themeToggle {
+    position: absolute;
+    top: 15px;
+    right: 5%;
+    flex: 0 0 auto;
+    padding: 8px;
+    font-size: 1rem;
+    z-index: 20;
+  }
+
+  ul {
+    width: 100%;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    margin: 0;
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  li a {
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* --- Hero Overhaul --- */
+  .hero {
+    min-height: 100svh;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background-attachment: scroll;
+    background-position: center center; /* center family framing for mobile */
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.50) 100%
+    );
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    padding: 0 12px;
+    margin-bottom: 14px;
+    color: #1e293b;
+  }
+
+  .hero h3 {
+    font-size: 0.95rem;
+    padding: 0 12px;
+    margin-bottom: 16px;
+    color: #475569;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+    padding: 0 12px;
+    margin-bottom: 28px;
+    color: #64748b;
+  }
+
+  /* --- Buttons --- */
+  .buttons {
+    flex-direction: column;
+    width: 90%;
+    max-width: 280px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding: 13px 20px;
+  }
+
+  /* --- Sections --- */
+  section {
+    padding: 50px 4%;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  /* --- About --- */
+  .aboutContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .aboutContainer img {
+    max-width: 220px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* --- Grids --- */
+  .skillGrid,
+  .projectGrid,
+  .serviceGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* --- Store Cards --- */
+  .storeCard {
+    max-width: 100%;
+  }
+
+  .storeCard img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .storeCardInfo {
+    padding: 20px;
+  }
+
+  .storeCardInfo h3 {
+    font-size: 1.2rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  /* --- Timeline --- */
+  .timeline div {
+    padding: 20px;
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 30px 4%;
+  }
+
+  .socials {
+    gap: 10px;
+  }
+
+  .socials a {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  /* --- Form --- */
+  form {
+    width: 100%;
+    padding: 0 2%;
+  }
+}
+
+/* E-commerce Store Cards */
+.storeCard {
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+  display: flex;
+  flex-direction: column;
+}
+
+.storeCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+  border-color: var(--accent);
+}
+
+.storeCard img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.storeCardInfo {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.storeCardInfo h3 {
+  margin-bottom: 5px;
+  font-size: 1.5rem;
+}
+
+.price {
+  color: var(--accent);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.buyBtn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  margin-top: auto;
+  width: 100%;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.buyBtn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+}
+
+/* Product Landing Pages */
+.productDetail {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+.productImage {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.productImage img {
+  width: 100%;
+  border-radius: 0;
+  display: block;
+  object-fit: cover;
+}
+.productInfo {
+  flex: 1;
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+}
+.productInfo h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.productInfo .price {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.productInfo p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+.productFeatures {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 40px;
+}
+.productFeatures li {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.productFeatures li::before {
+  content: "✔";
+  color: var(--accent);
+  font-weight: bold;
+}
+.buyNowBtn {
+  background: linear-gradient(45deg, var(--accent), #90c2ff);
+  color: #111;
+  border: none;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.buyNowBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+  opacity: 0.95;
+}
+
+@media (max-width: 800px) {
+  .productDetail {
+    flex-direction: column;
+  }
+}
+/* Payment Buttons Styles */
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    width: 100%;
+}
+
+.paypal-btn {
+    display: block;
+    background: #ffc439; /* PayPal Yellow */
+    color: #111;
+    padding: 15px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    border: none;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: normal;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.paypal-btn img {
+    vertical-align: middle;
+    margin-right: 6px;
+    width: 22px;
+}
+
+.paypal-btn:hover {
+    background: #f2ba36;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 196, 57, 0.3);
+}
+
+
+.credit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #111;
+    color: #fff;
+    padding: 15px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.credit-btn img {
+    width: 20px;
+    height: auto;
+}
+
+.credit-btn:hover {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.light .credit-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.light .credit-btn:hover {
+    background: #e2e8f0;
+}
+
+.payment-separator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    border-top: 1px dashed var(--card-border);
+    padding-top: 15px;
+    width: 100%;
+}
+
+.badge-text {
+    color: #ffd700;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.badge-icons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.badge-icons img {
+    width: 28px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.payment-hint {
+    color: #ffd700; /* Vibrant Gold for attention */
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 8px;
+    font-weight: 700;
+}
+
+.payment-hint::after {
+    content: 'لا تحتاج لحساب بايبال - يمكنك الدفع بأي بطاقة بنكية بأمان';
+    display: block;
+    font-size: 0.7rem;
+    margin-top: 4px;
+    opacity: 0.9;
+}
+
+/* Countdown Timer Styling */
+.countdown-box {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px dashed #ff4d4d;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.countdown-text {
+    font-weight: 700;
+    color: #ff4d4d;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+#countdown-timer {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ff4d4d;
+    letter-spacing: 2px;
+}
+
+/* FAQ Section Styling */
+.faq-section {
+    margin-top: 60px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid var(--card-border);
+}
+
+.faq-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 15px;
+}
+
+.faq-question {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.faq-answer {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+/* Floating Telegram Button */
+.telegram-float {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #0088cc;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+.whatsapp-float:hover, .telegram-float:hover {
+    transform: scale(1.1);
+}
+
+/* Premium Checkout Interaction */
+.checkout-container {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.payment-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    color: var(--text-muted);
+}
+
+.payment-divider::before, .payment-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.payment-divider span {
+    padding: 0 15px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.native-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-grp {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.input-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-grp label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.secure-pay {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border: none !important;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s !important;
+}
+
+.secure-pay:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
+}
+
+.secure-badge {
+    font-size: 0.65rem;
+    opacity: 0.8;
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+.trusted-badges {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--card-border);
+}
+
+.trusted-badges img {
+    width: 35px;
+    filter: grayscale(0.2);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+
+.trusted-badges img:hover {
+    opacity: 1;
+}
+
+/* Payeer & Binance Button Styles */
+.pay-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.credit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #000;
+    color: #fff !important;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.credit-btn:hover {
+    background: #222;
+    transform: translateY(-1px);
+}
+
+.payeer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #0088cc;
+    color: white !important;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.payeer-btn:hover {
+    background: #0077b5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 136, 204, 0.4);
+}
+
+
+.binance-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #000000;
+    color: #f3ba2f !important;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 2px solid #f3ba2f;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.binance-btn:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(243, 186, 47, 0.4);
+}
+
+
+.btn-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Binance Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+
+.modal-content {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid #f3ba2f;
+    max-width: 320px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(243, 186, 47, 0.2);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #94a3b8;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.wallet-box {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #f3ba2f;
+    border: 1px dashed #334155;
+    position: relative;
+}
+
+.copy-btn {
+    background: #f3ba2f;
+    color: #000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 700;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.network-badge {
+    background: rgba(243, 186, 47, 0.1);
+    color: #f3ba2f;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+
+
+
+/* Advanced Card Fields Styling */
+.payment-divider {
+    text-align: center;
+    position: relative;
+    margin: 30px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-divider span {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0f172a;
+    padding: 0 15px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.card-field-input {
+    background: #ffffff !important;
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    height: 50px !important;
+    border: 1px solid #cbd5e1 !important;
+    margin-bottom: 15px !important;
+}
+
+.card-field-input:focus-within {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.2) !important;
+}
+
+.secure-pay {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    border: none !important;
+    height: 60px !important;
+    font-size: 1.1rem !important;
+}
+
+/* ============================================
+   SUPPORT & PAYMENT HELP BOX
+   ============================================ */
+.payment-help-box {
+    background: rgba(77, 163, 255, 0.05);
+    border: 1px dashed var(--accent);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: right;
+    direction: rtl;
+}
+
+.payment-help-box p {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.payment-help-box .en, .payment-help-box .fr {
+    direction: ltr;
+    text-align: left;
+    display: block;
+    margin-top: 5px;
+    color: var(--text-muted);
+    font-style: italic;
+}
