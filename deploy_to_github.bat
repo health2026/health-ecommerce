@@ -1,7 +1,22 @@
 @echo off
-echo Deploying payment fixes and thank you page...
+title GitHub Deployer
+echo.
+echo [1/3] Adding changes...
 git add .
-git commit -m "Premium Store Overhaul - Mobile Fixes and Product Galleries"
+if %errorlevel% neq 0 (
+    echo ERROR: Git is not installed or not initialized.
+    pause
+    exit /b
+)
+
+echo [2/3] Committing...
+git commit -m "Fix mobile UI and visibility"
+
+echo [3/3] Pushing to GitHub...
 git push origin main
-echo DONE! Please refresh your website in 1 minute.
+
+echo.
+echo ==========================================
+echo DONE! Please refresh your site in 1 minute.
+echo ==========================================
 pause
