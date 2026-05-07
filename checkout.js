@@ -52,20 +52,20 @@ function showBinanceModal(itemName, amount) {
     document.body.style.overflow = 'hidden';
     
     modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div style="text-align: center;">
-                <h2 style="font-size: 1.1rem; color: #f3ba2f; margin-bottom: 12px;">Binance Pay Checkout</h2>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${binanceWallet}" alt="Binance QR" style="width: 120px; background: #fff; padding: 6px; border-radius: 10px; margin-bottom: 12px;">
-                <p style="font-weight: 700; font-size: 0.95rem; color: #fff; margin-bottom: 4px;">Total: $${amount} USDT</p>
-                <div style="font-family: monospace; font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; border: 1px dashed #f3ba2f; word-break: break-all; margin: 0 10px;">${binanceWallet}</div>
-                <button id="copyBtn" style="width: calc(100% - 20px); margin: 10px auto; background: #334155; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; display: block;">Copy Address | نسخ</button>
+        <div class="modal-content" style="box-sizing: border-box; width: 92%; max-width: 360px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 16px; background: #1e293b; border: 1px solid #f3ba2f; position: relative;">
+            <span class="close-modal" style="position: absolute; top: 12px; right: 16px; font-size: 26px; color: #94a3b8; cursor: pointer; font-weight: bold; line-height: 1;">&times;</span>
+            <div style="text-align: center; padding-top: 10px;">
+                <h2 style="font-size: 1rem; color: #f3ba2f; margin-bottom: 10px; margin-top: 0;">🔶 Binance Pay Checkout</h2>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${binanceWallet}" alt="Binance QR" style="width: 110px; height: 110px; background: #fff; padding: 6px; border-radius: 10px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;">
+                <p style="font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 6px; margin-top: 0;">Total: $${amount} USDT (TRC-20)</p>
+                <div style="box-sizing: border-box; font-family: monospace; font-size: 0.65rem; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; border: 1px dashed #f3ba2f; word-break: break-all; width: 100%;">${binanceWallet}</div>
+                <button id="copyBtn" style="box-sizing: border-box; width: 100%; margin: 10px 0 0 0; background: #334155; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; display: block;">📋 Copy Address | نسخ العنوان</button>
             </div>
-            <div style="margin-top: 10px; padding: 0 5px;">
-                <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-bottom: 10px;">After payment, please send us your details via WhatsApp:</p>
-                <input type="text" id="wa-name" placeholder="Full Name | الاسم الكامل" style="width: 100%; padding: 10px; margin-bottom: 8px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 0.85rem;">
-                <textarea id="wa-address" placeholder="Shipping Address | عنوان الشحن" style="width: 100%; padding: 10px; height: 60px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 0.85rem; resize: none;"></textarea>
-                <button id="sendWaBtn" style="width: 100%; margin-top: 12px; background: #22c55e; color: #fff; padding: 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">Send Proof via WhatsApp</button>
+            <div style="margin-top: 14px;">
+                <p style="font-size: 0.7rem; color: #94a3b8; text-align: center; margin-bottom: 8px; margin-top: 0;">After payment, send details via WhatsApp:</p>
+                <input type="text" id="wa-name" placeholder="Full Name | الاسم الكامل" style="box-sizing: border-box; width: 100%; padding: 10px; margin-bottom: 8px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 0.85rem; display: block;">
+                <textarea id="wa-address" placeholder="Shipping Address | عنوان الشحن" style="box-sizing: border-box; width: 100%; padding: 10px; height: 60px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 0.85rem; resize: none; display: block; margin-bottom: 0;"></textarea>
+                <button id="sendWaBtn" style="box-sizing: border-box; width: 100%; margin-top: 12px; background: #22c55e; color: #fff; padding: 16px 10px; border-radius: 10px; border: none; font-weight: 800; cursor: pointer; font-size: 1rem; display: block; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4); letter-spacing: 0.5px;">✅ Send Proof via WhatsApp | إرسال</button>
             </div>
         </div>
     `;
