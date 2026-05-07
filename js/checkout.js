@@ -48,8 +48,8 @@ function showBinanceModal(itemName, amount) {
         modal = document.getElementById('binanceModal');
     }
     modal.innerHTML = `
-        <div class="modal-content" style="box-sizing: border-box; width: 92%; max-width: 380px; padding: 25px 20px 40px; border-radius: 24px; background: #1e293b; border: 1px solid #f3ba2f; position: relative; color: white; margin: 20px auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-            <span class="close-modal" style="position: absolute; top: 15px; right: 20px; font-size: 30px; color: #94a3b8; cursor: pointer; font-weight: bold; line-height: 1;">&times;</span>
+        <div class="modal-content" style="box-sizing: border-box; width: 92%; max-width: 380px; padding: 25px 20px 40px; border-radius: 24px; background: #1e293b; border: 1px solid #f3ba2f; position: relative; color: white; margin: 40px auto 100px auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <span class="close-modal" style="position: absolute; top: 15px; right: 20px; font-size: 30px; color: #94a3b8; cursor: pointer; font-weight: bold; line-height: 1; z-index: 10;">&times;</span>
             <div style="text-align: center; padding-top: 10px;">
                 <h2 style="font-size: 1.2rem; color: #f3ba2f; margin: 0 0 15px 0;">🔶 Binance Pay Checkout</h2>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${binanceWallet}" alt="Binance QR" style="width: 130px; height: 130px; background: #fff; padding: 8px; border-radius: 12px; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto; border: 2px solid #f3ba2f;">
@@ -65,7 +65,13 @@ function showBinanceModal(itemName, amount) {
             </div>
         </div>
     `;
-    modal.style.display = 'flex';
+    
+    // Instead of flex, use block or grid to ensure scrolling works reliably on all mobile browsers
+    modal.style.display = 'block';
+    modal.style.overflowY = 'auto';
+    modal.style.padding = '20px 0 80px 0'; // Extra padding at bottom to prevent cutoff
+    modal.scrollTop = 0;
+    
     document.body.style.overflow = 'hidden';
     
     const closeModal = () => {
