@@ -14,7 +14,7 @@ git commit -m "Fix: Mobile UI visibility and sync repo"
 
 echo [3/4] Pulling latest updates from GitHub...
 echo (This prevents the 'rejected' error by syncing your local code first)
-git pull --rebase origin main
+git pull origin main
 
 echo [4/4] Pushing to GitHub...
 git push origin main
