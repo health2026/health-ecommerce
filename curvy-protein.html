@@ -98,7 +98,7 @@
                     <input type="text" id="custCity" class="form-control" placeholder="المدينة">
                     <textarea id="custAddress" class="form-control" placeholder="العنوان بالكامل" rows="3"></textarea>
                     
-                    <button class="submit-btn" onclick="sendWhatsAppOrder()">تأكيد الطلب عبر واتساب</button>
+                    <button class="submit-btn" onclick="sendOrder()">تأكيد الطلب</button>
                 </div>
             </div>
         </section>
@@ -106,6 +106,7 @@
     <script>
         let selectedQty = 1;
         let selectedPrice = 299;
+        const GOOGLE_SCRIPT_URL = 'ضع_الرابط_هنا';
         
         function selectPackage(qty, price, element) {
             selectedQty = qty;
@@ -115,7 +116,7 @@
             element.classList.add('selected');
         }
         
-        function sendWhatsAppOrder() {
+        function sendOrder() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const city = document.getElementById('custCity').value.trim();
@@ -125,9 +126,46 @@
                 alert("المرجاء ملء جميع المعلومات (الاسم، رقم الهاتف، والمدينة).");
                 return;
             }
-            
-            const message = encodeURIComponent(`*طلب جديد - Curvy Shape*\nالكمية: ${selectedQty} علبة\nالسعر الإجمالي: ${selectedPrice} درهم\n\n*معلومات الزبون:*\nالاسم: ${name}\nالهاتف: ${phone}\nالمدينة: ${city}\nالعنوان: ${address}`);
-            window.open(`https://wa.me/212641617786?text=${message}`, '_blank');
+
+            const btn = document.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'جاري الإرسال...';
+            btn.disabled = true;
+
+            const data = new FormData();
+            data.append('product', 'Curvy Shape');
+            data.append('quantity', selectedQty);
+            data.append('price', selectedPrice);
+            data.append('name', name);
+            data.append('phone', phone);
+            data.append('city', city);
+            data.append('address', address);
+            data.append('date', new Date().toLocaleString());
+
+            if (GOOGLE_SCRIPT_URL === 'ضع_الرابط_هنا') {
+                alert("عذراً، يجب وضع رابط Google Sheet في الكود أولاً (الخطوة الأخيرة في الإعداد).");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: data
+            })
+            .then(res => res.text())
+            .then(res => {
+                btn.innerHTML = 'تم استلام طلبك بنجاح ✅';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    window.location.href = 'thanks.html';
+                }, 2000);
+            })
+            .catch(error => {
+                alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
         }
         
         const themeToggle = document.getElementById('themeToggle'); const themeIcon = document.getElementById('themeIcon');
