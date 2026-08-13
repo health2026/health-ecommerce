@@ -21,6 +21,7 @@
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 24px; box-shadow: 0 40px 80px rgba(0,0,0,0.5); margin: 50px 0; border: 1px solid rgba(255,255,255,0.05); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         @media (max-width: 768px) { .hero-premium { flex-direction: column; text-align: center; padding-top: 100px; } .grid-2 { grid-template-columns: 1fr !important; } .hero-content { order: 1; } .hero-image { order: 2; h1 { font-size: 3.5rem !important; } } }
+        .thumb-img:hover, .thumb-img.active { opacity: 1; border-color: var(--accent-new); }
     </style>
 </head>
 <body>
@@ -40,7 +41,16 @@
                 <p style="font-size: 1.4rem; color: #94a3b8; margin-bottom: 30px;">Peak athletic support for your joints.</p>
                 <a href="#order" class="btn" style="background: var(--accent-new); padding: 20px 40px; border-radius: 12px; color: white; text-decoration: none; font-weight: 800; display: inline-block;">GET PERFORMANCE PACK</a>
             </div>
-            <div class="hero-image"><img src="images/pro_kneepads_product.png"></div>
+            <div class="hero-image" style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="width: 100%; border-radius: 30px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); position: relative; padding-bottom: 100%;">
+                    <img id="main-image-knee" src="images/pro_kneepads_product.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease;">
+                </div>
+                <div class="thumb-container">
+                    <img src="images/pro_kneepads_product.png" onclick="document.getElementById('main-image-knee').src=this.src; document.querySelectorAll('.thumb-knee').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-knee active">
+                    <img src="images/kneepads_1.png" onclick="document.getElementById('main-image-knee').src=this.src; document.querySelectorAll('.thumb-knee').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-knee">
+                    <img src="images/pro_kneepads_lifestyle.png" onclick="document.getElementById('main-image-knee').src=this.src; document.querySelectorAll('.thumb-knee').forEach(el=>el.classList.remove('active')); this.classList.add('active');" class="thumb-img thumb-knee">
+                </div>
+            </div>
         </section>
 
         <!-- VIDEO SECTION -->
