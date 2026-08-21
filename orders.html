@@ -520,15 +520,21 @@
                         <span>قائمة الطلبيات المسجلة</span>
                     </h2>
 
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <button class="btn-custom btn-space" onclick="sendAllPendingToSpaceSeller()" id="btnBatchSend">
-                            <i data-lucide="send"></i> إرسال المعلقة إلى Space Seller 🚀
+                            <i data-lucide="send"></i> إرسال المعلقة لـ Space Seller 🚀
+                        </button>
+                        <button class="btn-custom btn-outline" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);" onclick="copyForGoogleSheets()">
+                            <i data-lucide="clipboard-copy"></i> نسخ لـ Google Sheet 📋
+                        </button>
+                        <button class="btn-custom btn-outline" onclick="openNewGoogleSheet()">
+                            <i data-lucide="external-link"></i> فتح Google Sheet 📊
                         </button>
                         <button class="btn-custom btn-outline" onclick="exportOrdersCSV()">
-                            <i data-lucide="download"></i> تصدير Excel/CSV
+                            <i data-lucide="download"></i> تنزيل CSV
                         </button>
                         <button class="btn-custom btn-outline" onclick="clearAllOrdersPrompt()" style="color: #ef4444;">
-                            <i data-lucide="trash-2"></i> مسح السجل
+                            <i data-lucide="trash-2"></i> مسح
                         </button>
                     </div>
                 </div>
@@ -1022,7 +1028,35 @@
             }
         }
 
-        // Export Orders to CSV
+        // 1-Click Copy for Google Sheets (Formatted with tabs for direct Ctrl+V)
+        function copyForGoogleSheets() {
+            const orders = getOrders();
+            if (orders.length === 0) {
+                alert("سجل الطلبيات فارغ حالياً.");
+                return;
+            }
+
+            let sheetText = "رقم الطلب\tالتاريخ\tاسم العميل\tرقم الهاتف\tالمدينة\tالعنوان\tالمنتج\tSKU\tالكمية\tالمبلغ (MAD)\tحالة Space Seller\tملاحظات\n";
+
+            orders.forEach(o => {
+                const sku = o.sku || getSkuForProduct(o.product);
+                sheetText += `${o.id}\t${o.date || ''}\t${o.name || ''}\t${o.phone || ''}\t${o.city || ''}\t${o.address || ''}\t${o.product || ''}\t${sku}\t${o.qty || 1}\t${o.price || 0}\t${o.status || 'PENDING'}\t${o.notes || ''}\n`;
+            });
+
+            navigator.clipboard.writeText(sheetText).then(() => {
+                showToast("تم النسخ بنجاح! 📋", "تم نسخ بيانات الطلبيات. افتح أي جدول Google Sheet واضغط Ctrl + V للصقها منسقة فوراً!");
+            }).catch(err => {
+                showToast("تنبيه", "يرجى السماح بالنسخ إلى الحافظة");
+            });
+        }
+
+        // Open fresh Google Sheets table directly in browser
+        function openNewGoogleSheet() {
+            window.open('https://docs.google.com/spreadsheets/u/0/create', '_blank');
+            showToast("جاري فتح Google Sheet 📊", "تم فتح جدول جديد، استخدم زر 'نسخ لـ Google Sheet' ثم الصقها هناك مباشرة!");
+        }
+
+        // Export Orders to CSV (with SKU column)
         function exportOrdersCSV() {
             const orders = getOrders();
             if (orders.length === 0) {
@@ -1031,9 +1065,10 @@
             }
 
             let csvContent = "\uFEFF"; // UTF-8 BOM for proper Arabic in Excel
-            csvContent += "رقم الطلب,التاريخ,اسم العميل,رقم الهاتف,المدينة,العنوان,المنتج,الكمية,المبلغ (MAD),حالة Space Seller,ملاحظات\n";
+            csvContent += "رقم الطلب,التاريخ,اسم العميل,رقم الهاتف,المدينة,العنوان,المنتج,SKU,الكمية,المبلغ (MAD),حالة Space Seller,ملاحظات\n";
 
             orders.forEach(o => {
+                const sku = o.sku || getSkuForProduct(o.product);
                 const row = [
                     o.id,
                     `"${o.date || ''}"`,
@@ -1042,6 +1077,7 @@
                     `"${o.city || ''}"`,
                     `"${(o.address || '').replace(/"/g, '""')}"`,
                     `"${o.product || ''}"`,
+                    `"${sku}"`,
                     o.qty || 1,
                     o.price || 0,
                     o.status || 'PENDING',
