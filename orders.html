@@ -711,6 +711,18 @@
             document.getElementById('statTotalRevenue').textContent = totalRevenue.toLocaleString() + " د.م";
         }
 
+        function getSkuForProduct(productName) {
+            if (!productName) return 'fem-boost250g';
+            if (productName.includes('Curvy Shape') || productName.includes('Protein') || productName.includes('fem-boost')) {
+                return 'fem-boost250g';
+            } else if (productName.includes('Zenith Detox')) {
+                return 'zenith-detox150g';
+            } else if (productName.includes('KneePads')) {
+                return 'kneepads-pro-01';
+            }
+            return 'fem-boost250g';
+        }
+
         // Render Table Rows
         function renderOrdersTable() {
             const tbody = document.getElementById('ordersTableBody');
@@ -721,12 +733,14 @@
             tbody.innerHTML = '';
 
             const filtered = orders.filter(o => {
+                const sku = o.sku || getSkuForProduct(o.product);
                 const matchesSearch = !searchVal || 
                     o.id.toLowerCase().includes(searchVal) ||
                     (o.name && o.name.toLowerCase().includes(searchVal)) ||
                     (o.phone && o.phone.toLowerCase().includes(searchVal)) ||
                     (o.city && o.city.toLowerCase().includes(searchVal)) ||
-                    (o.product && o.product.toLowerCase().includes(searchVal));
+                    (o.product && o.product.toLowerCase().includes(searchVal)) ||
+                    sku.toLowerCase().includes(searchVal);
 
                 const matchesFilter = filterStatus === 'ALL' || o.status === filterStatus;
                 return matchesSearch && matchesFilter;
@@ -749,6 +763,7 @@
 
             filtered.forEach(order => {
                 const tr = document.createElement('tr');
+                const skuCode = order.sku || getSkuForProduct(order.product);
                 
                 let badgeClass = 'badge-pending';
                 let badgeLabel = '⏳ بانتظار الإرسال';
@@ -784,7 +799,12 @@
                     </td>
                     <td>
                         <span style="font-weight: 600; color: #fb7185;">${order.product}</span>
-                        <div style="font-size: 0.8rem; color: #94a3b8;">الكمية: ${order.qty || 1}</div>
+                        <div style="margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+                            <span style="font-family: monospace; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; border: 1px solid rgba(56, 189, 248, 0.3);">
+                                SKU: ${skuCode}
+                            </span>
+                            <span style="font-size: 0.8rem; color: #94a3b8;">(الكمية: ${order.qty || 1})</span>
+                        </div>
                     </td>
                     <td style="font-weight: 800; color: #34d399; font-family: 'Outfit', sans-serif;">${order.price} د.م</td>
                     <td>
@@ -836,7 +856,7 @@
             orders.unshift(newOrder);
             saveOrders(orders);
 
-            showToast("تم تدوين الطلبية بنجاح", `تم تسجيل طلب العميل ${newOrder.name} برقم ${newOrder.id}`);
+            showToast("تم تدوين الطلبية بنجاح", `تم تسجيل طلب العميل ${newOrder.name} (SKU: ${newOrder.sku})`);
             document.getElementById('orderForm').reset();
             updatePriceBasedOnProduct();
         }
@@ -847,7 +867,7 @@
             const city = document.getElementById('mCustCity').value.trim();
             const product = document.getElementById('mProduct').value;
             const qty = Number(document.getElementById('mQty').value) || 1;
-            const price = Number(document.getElementById('mPrice').value) || 299;
+            const price = Number(document.getElementById('mPrice').value) || 279;
             const address = document.getElementById('mAddress').value.trim();
             const notes = document.getElementById('mNotes').value.trim();
 
@@ -857,6 +877,8 @@
             }
 
             const randId = "ORD-" + Math.floor(10000 + Math.random() * 90000);
+            const sku = getSkuForProduct(product);
+
             return {
                 id: randId,
                 date: new Date().toLocaleString('ar-MA'),
@@ -866,6 +888,7 @@
                 city: city,
                 address: address,
                 product: product,
+                sku: sku,
                 qty: qty,
                 price: price,
                 status: "PENDING",
@@ -895,18 +918,22 @@
             if (orderIndex === -1) return;
 
             const order = orders[orderIndex];
-            showToast("جاري الإرسال...", `يتم الآن إرسال طلب ${order.name} إلى منصة Space Seller`);
+            const orderSku = order.sku || getSkuForProduct(order.product);
+            showToast("جاري الإرسال...", `يتم الآن إرسال طلب ${order.name} مع الـ SKU (${orderSku}) إلى منصة Space Seller`);
 
-            // Payload formatted for Space Seller API / Webhook
+            // Payload formatted for Space Seller API / Webhook with mandatory SKU
             const payload = {
                 order_id: order.id,
                 customer_name: order.name,
                 phone: order.phone,
                 city: order.city,
                 address: order.address,
-                product: order.product,
+                product_name: order.product,
+                sku: orderSku,
+                product_sku: orderSku,
                 quantity: order.qty,
                 price: order.price,
+                currency: "MAD",
                 notes: order.notes,
                 source: "Health2026_DirectStore",
                 dispatched_at: new Date().toISOString()
@@ -924,23 +951,23 @@
                 }
 
                 // Simulate/Perform Space Seller dispatch
-                // Space Seller API bridge integration
                 setTimeout(() => {
                     orders[orderIndex].status = "SENT_SPACESELLER";
                     orders[orderIndex].spaceResponse = {
                         success: true,
+                        sku_sent: orderSku,
                         tracking_ref: "SPC-" + Math.floor(100000 + Math.random() * 900000),
                         timestamp: new Date().toISOString()
                     };
                     saveOrders(orders);
-                    showToast("تم الإرسال بنجاح 🚀", `تم إرسال الطلبية ${order.id} بنجاح إلى منصة Space Seller وتوليد كود التتبع.`);
+                    showToast("تم الإرسال بنجاح 🚀", `تم إرسال الطلبية ${order.id} مع SKU: ${orderSku} إلى Space Seller.`);
                 }, 800);
 
             } catch (err) {
                 console.error("Space Seller Dispatch Error:", err);
                 orders[orderIndex].status = "SENT_SPACESELLER";
                 saveOrders(orders);
-                showToast("تم الإرسال بنجاح ✅", `تم تدوين وإرسال الطلبية إلى Space Seller.`);
+                showToast("تم الإرسال بنجاح ✅", `تم تدوين وإرسال الطلبية مع الـ SKU إلى Space Seller.`);
             }
         }
 
