@@ -471,9 +471,9 @@
                         <div class="form-group">
                             <label class="form-label">المنتج *</label>
                             <select id="mProduct" class="form-select" onchange="updatePriceBasedOnProduct()">
-                                <option value="Curvy Shape (علبة واحدة)">Curvy Shape - علبة 1 (299 د.م)</option>
-                                <option value="Curvy Shape (علبتين)">Curvy Shape - 2 علب (399 د.م)</option>
-                                <option value="Curvy Shape (3 علب)">Curvy Shape - 3 علب (499 د.م)</option>
+                                <option value="Curvy Shape (علبة واحدة)">Curvy Shape - علبة 1 (279 د.م)</option>
+                                <option value="Curvy Shape (علبتين)">Curvy Shape - 2 علب (329 د.م)</option>
+                                <option value="Curvy Shape (3 علب)">Curvy Shape - 3 علب (379 د.م)</option>
                                 <option value="Zenith Detox Premium">Zenith Detox Tea (490 د.م)</option>
                                 <option value="Pro KneePads Ultra">Pro KneePads (299 د.م)</option>
                             </select>
@@ -487,7 +487,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">السعر الإجمالي (درهم)</label>
-                            <input type="number" id="mPrice" class="form-input" value="299">
+                            <input type="number" id="mPrice" class="form-input" value="279">
                         </div>
                     </div>
 
@@ -814,11 +814,11 @@
             const qty = Number(document.getElementById('mQty').value) || 1;
 
             if (product.includes('علبة واحدة')) {
-                priceInput.value = 299 * qty;
+                priceInput.value = 279 * qty;
             } else if (product.includes('علبتين')) {
-                priceInput.value = 399 * qty;
+                priceInput.value = 329 * qty;
             } else if (product.includes('3 علب')) {
-                priceInput.value = 499 * qty;
+                priceInput.value = 379 * qty;
             } else if (product.includes('Zenith Detox')) {
                 priceInput.value = 490 * qty;
             } else if (product.includes('Pro KneePads')) {
