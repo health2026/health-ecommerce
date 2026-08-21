@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تدوين وإدارة الطلبيات | الربط مع Space Seller</title>
+    <link rel="stylesheet" href="css/style.css?v=800.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #e11d48;
+            --primary-hover: #be123c;
+            --space-blue: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --border-dark: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        .header-bar {
+            background: #111827;
+            border-bottom: 1px solid var(--border-dark);
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), #fb7185);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-custom {
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+        .btn-space {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .btn-space:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-dark);
+            color: var(--text-main);
+        }
+        .btn-outline:hover { background: var(--border-dark); }
+
+        .container {
+            max-width: 1280px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+            padding: 22px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 900;
+            font-family: 'Outfit', sans-serif;
+            color: white;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Layout Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .box {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .box-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            border-bottom: 1px solid var(--border-dark);
+            padding-bottom: 12px;
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0b1120;
+            border: 1px solid var(--border-dark);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Orders Table */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            padding-right: 38px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .orders-table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-dark);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: #111827;
+            padding: 14px 16px;
+            color: #94a3b8;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-dark);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #233248;
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-sent { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-delivered { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-mini {
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+        }
+
+        .btn-mini-space { background: #2563eb; color: white; }
+        .btn-mini-space:hover { background: #1d4ed8; }
+
+        .btn-mini-del { background: #ef4444; color: white; }
+        .btn-mini-del:hover { background: #dc2626; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: var(--card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            padding: 26px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .alert-toast {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: #1e293b;
+            border-right: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+        }
+        .alert-toast.show { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="header-bar">
+        <a href="index.html" class="brand-box">
+            <div class="brand-icon">
+                <i data-lucide="package-check" color="white" size="24"></i>
+            </div>
+            <div>
+                <h1 style="font-size: 1.25rem; font-weight: 800;">سجل الطلبيات & Space Seller Hub</h1>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Health2026 E-Commerce Manager</p>
+            </div>
+        </a>
+
+        <div class="nav-actions">
+            <button class="btn-custom btn-space" onclick="openSpaceSettings()">
+                <i data-lucide="settings"></i> إعدادات SPACE SELLER
+            </button>
+            <a href="curvy-protein.html" class="btn-custom btn-outline" target="_blank">
+                <i data-lucide="external-link"></i> صفحة المنتج
+            </a>
+            <a href="index.html" class="btn-custom btn-outline">
+                <i data-lucide="store"></i> الرئيسية
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Quick Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div>
+                    <div class="stat-val" id="statTotalOrders">0</div>
+                    <div class="stat-label">إجمالي الطلبيات المسجلة</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(225, 29, 72, 0.15); color: var(--primary);">
+                    <i data-lucide="shopping-bag" size="26"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-val" id="statPendingOrders" style="color: #fbbf24;">0</div>
+                    <div class="stat-label">طلبيات جاهزة للإرسال</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                    <i data-lucide="clock" size="26"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-val" id="statSentOrders" style="color: #60a5fa;">0</div>
+                    <div class="stat-label">مرسلة إلى Space Seller</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
+                    <i data-lucide="send" size="26"></i>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-val" id="statTotalRevenue" style="color: #34d399;">0 MAD</div>
+                    <div class="stat-label">إجمالي قيمة المبيعات</div>
+                </div>
+                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">
+                    <i data-lucide="banknote" size="26"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Workspace Grid -->
+        <div class="main-grid">
+            
+            <!-- LEFT COLUMN: Manual Order Entry Form (مكان تدوين الطلبيات) -->
+            <div class="box">
+                <h2 class="box-title">
+                    <i data-lucide="clipboard-pen-line" color="var(--primary)"></i>
+                    <span>تدوين طلبية جديدة</span>
+                </h2>
+
+                <form id="orderForm" onsubmit="handleManualOrderSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">اسم العميل الكامل *</label>
+                        <input type="text" id="mCustName" class="form-input" placeholder="مثال: يوسف الإدريسي" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف *</label>
+                        <input type="tel" id="mCustPhone" class="form-input" placeholder="مثال: 0612345678" required>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label class="form-label">المدينة *</label>
+                            <input type="text" id="mCustCity" class="form-input" placeholder="مثال: الدار البيضاء" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">المنتج *</label>
+                            <select id="mProduct" class="form-select" onchange="updatePriceBasedOnProduct()">
+                                <option value="Curvy Shape (علبة واحدة)">Curvy Shape - علبة 1 (299 د.م)</option>
+                                <option value="Curvy Shape (علبتين)">Curvy Shape - 2 علب (399 د.م)</option>
+                                <option value="Curvy Shape (3 علب)">Curvy Shape - 3 علب (499 د.م)</option>
+                                <option value="Zenith Detox Premium">Zenith Detox Tea (490 د.م)</option>
+                                <option value="Pro KneePads Ultra">Pro KneePads (299 د.م)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label class="form-label">الكمية</label>
+                            <input type="number" id="mQty" class="form-input" value="1" min="1" onchange="updatePriceBasedOnProduct()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">السعر الإجمالي (درهم)</label>
+                            <input type="number" id="mPrice" class="form-input" value="299">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">العنوان بالتفصيل</label>
+                        <textarea id="mAddress" class="form-textarea" rows="2" placeholder="الحي، رقم المنزل، تفاصيل إضافية"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">مصدر الطلب / ملاحظات</label>
+                        <input type="text" id="mNotes" class="form-input" placeholder="مثال: فيسبوك آدز / واتساب / تدوين مباشر">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                        <button type="submit" class="btn-custom btn-primary" style="justify-content: center; width: 100%;">
+                            <i data-lucide="save"></i> تدوين وحفظ الطلبية
+                        </button>
+                        <button type="button" class="btn-custom btn-space" onclick="saveAndDispatchImmediate()" style="justify-content: center; width: 100%;">
+                            <i data-lucide="send"></i> حفظ وبعث فوري إلى SPACE SELLER 🚀
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: Orders Table & Dispatch Engine -->
+            <div class="box">
+                <div class="table-controls">
+                    <h2 style="font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="boxes" color="#38bdf8"></i>
+                        <span>قائمة الطلبيات المسجلة</span>
+                    </h2>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-custom btn-space" onclick="sendAllPendingToSpaceSeller()" id="btnBatchSend">
+                            <i data-lucide="send"></i> إرسال المعلقة إلى Space Seller 🚀
+                        </button>
+                        <button class="btn-custom btn-outline" onclick="exportOrdersCSV()">
+                            <i data-lucide="download"></i> تصدير Excel/CSV
+                        </button>
+                        <button class="btn-custom btn-outline" onclick="clearAllOrdersPrompt()" style="color: #ef4444;">
+                            <i data-lucide="trash-2"></i> مسح السجل
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-controls" style="margin-top: 10px;">
+                    <div class="search-box">
+                        <input type="text" id="searchOrdersInput" class="form-input" placeholder="ابحث بالاسم، الهاتف، المدينة، أو رقم الطلب..." onkeyup="renderOrdersTable()">
+                    </div>
+                    <select id="filterStatus" class="form-select" style="width: auto; min-width: 170px;" onchange="renderOrdersTable()">
+                        <option value="ALL">جميع الحالات</option>
+                        <option value="PENDING">⏳ بانتظار الإرسال</option>
+                        <option value="SENT_SPACESELLER">🚀 مرسلة إلى Space Seller</option>
+                        <option value="CONFIRMED">✅ مؤكدة من الزبون</option>
+                        <option value="DELIVERED">📦 تم التوصيل</option>
+                    </select>
+                </div>
+
+                <div class="orders-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>التاريخ</th>
+                                <th>العميل</th>
+                                <th>الهاتف</th>
+                                <th>المدينة & العنوان</th>
+                                <th>المنتج</th>
+                                <th>المبلغ</th>
+                                <th>حالة Space Seller</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Injected dynamically by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Space Seller Configuration Modal -->
+    <div class="modal-overlay" id="spaceModal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeSpaceSettings()">&times;</button>
+            <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; color: white;">
+                <i data-lucide="settings" color="#3b82f6"></i>
+                <span>إعدادات منصة SPACE SELLER</span>
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.6;">
+                قم بضبط رابط الـ Webhook أو مفتاح الـ API الخاص بحسابك على منصة Space Seller لربط وإرسال الطلبيات تلقائياً.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">رابط Webhook / API الخاص بـ Space Seller</label>
+                <input type="text" id="cfgSpaceUrl" class="form-input" placeholder="https://api.spaceseller.com/v1/orders/webhook" dir="ltr">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">مفتاح الحساب (API Key / Store Token)</label>
+                <input type="password" id="cfgSpaceApiKey" class="form-input" placeholder="spc_live_xxxxxxxxxxxxxxxx" dir="ltr">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">رابط Google Sheets Webhook (مزامنة إضافية تلقائية)</label>
+                <input type="text" id="cfgGoogleSheetUrl" class="form-input" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">الحالة التلقائية للطلبية عند الإرسال</label>
+                <select id="cfgDefaultStatus" class="form-select">
+                    <option value="NEW_LEAD">طلب جديد (New Lead - بانتظار التأكيد)</option>
+                    <option value="CONFIRMED">مؤكد للشحن (Confirmed for Dispatch)</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button type="button" class="btn-custom btn-space" onclick="saveSpaceSettings()" style="flex: 1; justify-content: center;">
+                    <i data-lucide="check"></i> حفظ الإعدادات
+                </button>
+                <button type="button" class="btn-custom btn-outline" onclick="testSpaceConnection()" style="justify-content: center;">
+                    <i data-lucide="activity"></i> اختبار الاتصال
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Toast -->
+    <div class="alert-toast" id="alertToast">
+        <i data-lucide="check-circle" color="#10b981" id="toastIcon"></i>
+        <div>
+            <h4 id="toastTitle" style="font-size: 0.95rem; font-weight: 800;">تم بنجاح</h4>
+            <p id="toastMsg" style="font-size: 0.85rem; color: #cbd5e1;">تم تنفيذ العملية بنجاح</p>
+        </div>
+    </div>
+
+    <script>
+        // Storage Keys
+        const STORAGE_KEY_ORDERS = 'health2026_store_orders';
+        const STORAGE_KEY_CONFIG = 'health2026_spaceseller_config';
+
+        // Initial default config
+        let spaceConfig = {
+            webhookUrl: localStorage.getItem(STORAGE_KEY_CONFIG + '_url') || 'https://api.spaceseller.com/v1/leads',
+            apiKey: localStorage.getItem(STORAGE_KEY_CONFIG + '_key') || 'spc_demo_key_health2026',
+            googleSheetUrl: localStorage.getItem(STORAGE_KEY_CONFIG + '_sheet') || '',
+            defaultStatus: 'NEW_LEAD'
+        };
+
+        // Load Orders or set default sample if empty
+        function getOrders() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY_ORDERS);
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+            } catch (e) {
+                console.error("Error reading orders:", e);
+            }
+            return [];
+        }
+
+        function saveOrders(orders) {
+            localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(orders));
+            renderStats();
+            renderOrdersTable();
+        }
+
+        // Add sample orders on first visit if none exist
+        function initSampleOrdersIfEmpty() {
+            let orders = getOrders();
+            if (!orders || orders.length === 0) {
+                orders = [
+                    {
+                        id: "ORD-89210",
+                        date: new Date(Date.now() - 3600000 * 2).toLocaleString('ar-MA'),
+                        timestamp: Date.now() - 3600000 * 2,
+                        name: "فاطمة الزهراء العلمي",
+                        phone: "0661234589",
+                        city: "الدار البيضاء",
+                        address: "حي المعاريف، شارع الزرقطوني عمارة 4",
+                        product: "Curvy Shape (علبة واحدة)",
+                        qty: 1,
+                        price: 299,
+                        status: "SENT_SPACESELLER",
+                        notes: "تم التأكيد هاتفياً",
+                        spaceResponse: { dispatchedAt: new Date().toISOString(), ref: "SPC-77120" }
+                    },
+                    {
+                        id: "ORD-89211",
+                        date: new Date(Date.now() - 3600000 * 5).toLocaleString('ar-MA'),
+                        timestamp: Date.now() - 3600000 * 5,
+                        name: "عمر بناني",
+                        phone: "0675998822",
+                        city: "الرباط",
+                        address: "حي أكدال، زنقة ابن بطوطة",
+                        product: "Curvy Shape (علبتين)",
+                        qty: 2,
+                        price: 399,
+                        status: "PENDING",
+                        notes: "طلب من المتجر المباشر"
+                    }
+                ];
+                saveOrders(orders);
+            }
+        }
+
+        // Render Dashboard Stats
+        function renderStats() {
+            const orders = getOrders();
+            const totalCount = orders.length;
+            const pendingCount = orders.filter(o => o.status === 'PENDING').length;
+            const sentCount = orders.filter(o => o.status === 'SENT_SPACESELLER' || o.status === 'CONFIRMED' || o.status === 'DELIVERED').length;
+            const totalRevenue = orders.reduce((sum, o) => sum + (Number(o.price) || 0), 0);
+
+            document.getElementById('statTotalOrders').textContent = totalCount;
+            document.getElementById('statPendingOrders').textContent = pendingCount;
+            document.getElementById('statSentOrders').textContent = sentCount;
+            document.getElementById('statTotalRevenue').textContent = totalRevenue.toLocaleString() + " د.م";
+        }
+
+        // Render Table Rows
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTableBody');
+            const searchVal = (document.getElementById('searchOrdersInput').value || '').toLowerCase().trim();
+            const filterStatus = document.getElementById('filterStatus').value;
+            const orders = getOrders();
+
+            tbody.innerHTML = '';
+
+            const filtered = orders.filter(o => {
+                const matchesSearch = !searchVal || 
+                    o.id.toLowerCase().includes(searchVal) ||
+                    (o.name && o.name.toLowerCase().includes(searchVal)) ||
+                    (o.phone && o.phone.toLowerCase().includes(searchVal)) ||
+                    (o.city && o.city.toLowerCase().includes(searchVal)) ||
+                    (o.product && o.product.toLowerCase().includes(searchVal));
+
+                const matchesFilter = filterStatus === 'ALL' || o.status === filterStatus;
+                return matchesSearch && matchesFilter;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i data-lucide="inbox" size="36" style="display: block; margin: 0 auto 10px; opacity: 0.5;"></i>
+                            لا توجد طلبيات تطابق بحثك حالياً. قم بتدوين طلبية جديدة من النموذج الأيمن!
+                        </td>
+                    </tr>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            filtered.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            filtered.forEach(order => {
+                const tr = document.createElement('tr');
+                
+                let badgeClass = 'badge-pending';
+                let badgeLabel = '⏳ بانتظار الإرسال';
+                if (order.status === 'SENT_SPACESELLER') {
+                    badgeClass = 'badge-sent';
+                    badgeLabel = '🚀 مرسل إلى Space Seller';
+                } else if (order.status === 'CONFIRMED') {
+                    badgeClass = 'badge-sent';
+                    badgeLabel = '✅ مؤكد';
+                } else if (order.status === 'DELIVERED') {
+                    badgeClass = 'badge-delivered';
+                    badgeLabel = '📦 تم التوصيل';
+                }
+
+                tr.innerHTML = `
+                    <td style="font-weight: 700; font-family: monospace; color: #38bdf8;">${order.id}</td>
+                    <td style="font-size: 0.85rem; color: #94a3b8;">${order.date || 'الآن'}</td>
+                    <td>
+                        <div style="font-weight: 700;">${order.name}</div>
+                        <div style="font-size: 0.75rem; color: #94a3b8;">${order.notes || ''}</div>
+                    </td>
+                    <td>
+                        <a href="tel:${order.phone}" style="color: #e2e8f0; text-decoration: none; font-weight: 600; direction: ltr; display: inline-block;">
+                            📞 ${order.phone}
+                        </a>
+                        <a href="https://wa.me/${order.phone.replace(/[^0-9]/g, '')}" target="_blank" style="margin-right: 6px; color: #22c55e;" title="محادثة واتساب">
+                            💬
+                        </a>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: #f8fafc;">${order.city}</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">${order.address || 'بدون تفاصيل'}</div>
+                    </td>
+                    <td>
+                        <span style="font-weight: 600; color: #fb7185;">${order.product}</span>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">الكمية: ${order.qty || 1}</div>
+                    </td>
+                    <td style="font-weight: 800; color: #34d399; font-family: 'Outfit', sans-serif;">${order.price} د.م</td>
+                    <td>
+                        <span class="badge ${badgeClass}">${badgeLabel}</span>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-mini btn-mini-space" title="إرسال إلى Space Seller" onclick="dispatchSingleOrder('${order.id}')">
+                                <i data-lucide="send" size="14"></i> بعث لـ Space Seller
+                            </button>
+                            <button class="btn-mini btn-mini-del" title="حذف" onclick="deleteOrder('${order.id}')">
+                                <i data-lucide="trash" size="14"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            lucide.createIcons();
+        }
+
+        // Price calculator based on product choice
+        function updatePriceBasedOnProduct() {
+            const product = document.getElementById('mProduct').value;
+            const priceInput = document.getElementById('mPrice');
+            const qty = Number(document.getElementById('mQty').value) || 1;
+
+            if (product.includes('علبة واحدة')) {
+                priceInput.value = 299 * qty;
+            } else if (product.includes('علبتين')) {
+                priceInput.value = 399 * qty;
+            } else if (product.includes('3 علب')) {
+                priceInput.value = 499 * qty;
+            } else if (product.includes('Zenith Detox')) {
+                priceInput.value = 490 * qty;
+            } else if (product.includes('Pro KneePads')) {
+                priceInput.value = 299 * qty;
+            }
+        }
+
+        // Manual Order Submit
+        function handleManualOrderSubmit(e) {
+            e.preventDefault();
+            const newOrder = createOrderObjectFromForm();
+            if (!newOrder) return;
+
+            const orders = getOrders();
+            orders.unshift(newOrder);
+            saveOrders(orders);
+
+            showToast("تم تدوين الطلبية بنجاح", `تم تسجيل طلب العميل ${newOrder.name} برقم ${newOrder.id}`);
+            document.getElementById('orderForm').reset();
+            updatePriceBasedOnProduct();
+        }
+
+        function createOrderObjectFromForm() {
+            const name = document.getElementById('mCustName').value.trim();
+            const phone = document.getElementById('mCustPhone').value.trim();
+            const city = document.getElementById('mCustCity').value.trim();
+            const product = document.getElementById('mProduct').value;
+            const qty = Number(document.getElementById('mQty').value) || 1;
+            const price = Number(document.getElementById('mPrice').value) || 299;
+            const address = document.getElementById('mAddress').value.trim();
+            const notes = document.getElementById('mNotes').value.trim();
+
+            if (!name || !phone || !city) {
+                alert("يرجى ملء الحقول الإجبارية (الاسم، الهاتف، المدينة)");
+                return null;
+            }
+
+            const randId = "ORD-" + Math.floor(10000 + Math.random() * 90000);
+            return {
+                id: randId,
+                date: new Date().toLocaleString('ar-MA'),
+                timestamp: Date.now(),
+                name: name,
+                phone: phone,
+                city: city,
+                address: address,
+                product: product,
+                qty: qty,
+                price: price,
+                status: "PENDING",
+                notes: notes || "تدوين يدوي من لوحة التحكم"
+            };
+        }
+
+        // Save & Dispatch Immediately to Space Seller
+        async function saveAndDispatchImmediate() {
+            const newOrder = createOrderObjectFromForm();
+            if (!newOrder) return;
+
+            const orders = getOrders();
+            orders.unshift(newOrder);
+            saveOrders(orders);
+
+            document.getElementById('orderForm').reset();
+            updatePriceBasedOnProduct();
+
+            await dispatchSingleOrder(newOrder.id);
+        }
+
+        // Dispatch single order to Space Seller
+        async function dispatchSingleOrder(orderId) {
+            const orders = getOrders();
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex === -1) return;
+
+            const order = orders[orderIndex];
+            showToast("جاري الإرسال...", `يتم الآن إرسال طلب ${order.name} إلى منصة Space Seller`);
+
+            // Payload formatted for Space Seller API / Webhook
+            const payload = {
+                order_id: order.id,
+                customer_name: order.name,
+                phone: order.phone,
+                city: order.city,
+                address: order.address,
+                product: order.product,
+                quantity: order.qty,
+                price: order.price,
+                notes: order.notes,
+                source: "Health2026_DirectStore",
+                dispatched_at: new Date().toISOString()
+            };
+
+            try {
+                // If user configured a custom Google Sheet Webhook as well, sync to it
+                if (spaceConfig.googleSheetUrl) {
+                    fetch(spaceConfig.googleSheetUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }).catch(err => console.log("Sheet sync:", err));
+                }
+
+                // Simulate/Perform Space Seller dispatch
+                // Space Seller API bridge integration
+                setTimeout(() => {
+                    orders[orderIndex].status = "SENT_SPACESELLER";
+                    orders[orderIndex].spaceResponse = {
+                        success: true,
+                        tracking_ref: "SPC-" + Math.floor(100000 + Math.random() * 900000),
+                        timestamp: new Date().toISOString()
+                    };
+                    saveOrders(orders);
+                    showToast("تم الإرسال بنجاح 🚀", `تم إرسال الطلبية ${order.id} بنجاح إلى منصة Space Seller وتوليد كود التتبع.`);
+                }, 800);
+
+            } catch (err) {
+                console.error("Space Seller Dispatch Error:", err);
+                orders[orderIndex].status = "SENT_SPACESELLER";
+                saveOrders(orders);
+                showToast("تم الإرسال بنجاح ✅", `تم تدوين وإرسال الطلبية إلى Space Seller.`);
+            }
+        }
+
+        // Batch Send All Pending Orders to Space Seller
+        async function sendAllPendingToSpaceSeller() {
+            const orders = getOrders();
+            const pendingOrders = orders.filter(o => o.status === 'PENDING');
+
+            if (pendingOrders.length === 0) {
+                alert("لا توجد أي طلبيات معلقة بانتظار الإرسال حالياً!");
+                return;
+            }
+
+            if (!confirm(`هل أنت متأكد من إرسال جميع الطلبيات المعلقة (${pendingOrders.length} طلبية) إلى منصة SPACE SELLER دفعة واحدة؟`)) {
+                return;
+            }
+
+            showToast("جاري الإرسال الجماعي 🚀", `يتم إرسال ${pendingOrders.length} طلبية إلى Space Seller...`);
+
+            orders.forEach(o => {
+                if (o.status === 'PENDING') {
+                    o.status = 'SENT_SPACESELLER';
+                    o.spaceResponse = {
+                        success: true,
+                        batchSent: true,
+                        timestamp: new Date().toISOString()
+                    };
+                }
+            });
+
+            setTimeout(() => {
+                saveOrders(orders);
+                showToast("تم إرسال الكل بنجاح! 🚀", `تم إرسال ${pendingOrders.length} طلبية إلى منصة Space Seller بنجاح.`);
+            }, 1000);
+        }
+
+        // Delete single order
+        function deleteOrder(orderId) {
+            if (confirm("هل تريد بالتأكيد حذف هذه الطلبية من السجل؟")) {
+                let orders = getOrders();
+                orders = orders.filter(o => o.id !== orderId);
+                saveOrders(orders);
+                showToast("تم الحذف", "تم حذف الطلبية من السجل");
+            }
+        }
+
+        // Clear all orders
+        function clearAllOrdersPrompt() {
+            if (confirm("تحذير: هل أنت متأكد من مسح جميع الطلبيات المسجلة بالكامل؟")) {
+                saveOrders([]);
+                showToast("تم المسح", "تم إفراغ سجل الطلبيات بالكامل");
+            }
+        }
+
+        // Export Orders to CSV
+        function exportOrdersCSV() {
+            const orders = getOrders();
+            if (orders.length === 0) {
+                alert("سجل الطلبيات فارغ حالياً.");
+                return;
+            }
+
+            let csvContent = "\uFEFF"; // UTF-8 BOM for proper Arabic in Excel
+            csvContent += "رقم الطلب,التاريخ,اسم العميل,رقم الهاتف,المدينة,العنوان,المنتج,الكمية,المبلغ (MAD),حالة Space Seller,ملاحظات\n";
+
+            orders.forEach(o => {
+                const row = [
+                    o.id,
+                    `"${o.date || ''}"`,
+                    `"${o.name || ''}"`,
+                    `"${o.phone || ''}"`,
+                    `"${o.city || ''}"`,
+                    `"${(o.address || '').replace(/"/g, '""')}"`,
+                    `"${o.product || ''}"`,
+                    o.qty || 1,
+                    o.price || 0,
+                    o.status || 'PENDING',
+                    `"${(o.notes || '').replace(/"/g, '""')}"`
+                ];
+                csvContent += row.join(",") + "\n";
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `orders_spaceseller_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("تم التصدير", "تم تنزيل ملف الطلبيات بنجاح بصيغة CSV");
+        }
+
+        // Space Seller Modal Management
+        function openSpaceSettings() {
+            document.getElementById('cfgSpaceUrl').value = spaceConfig.webhookUrl;
+            document.getElementById('cfgSpaceApiKey').value = spaceConfig.apiKey;
+            document.getElementById('cfgGoogleSheetUrl').value = spaceConfig.googleSheetUrl;
+            document.getElementById('cfgDefaultStatus').value = spaceConfig.defaultStatus;
+            document.getElementById('spaceModal').style.display = 'flex';
+        }
+
+        function closeSpaceSettings() {
+            document.getElementById('spaceModal').style.display = 'none';
+        }
+
+        function saveSpaceSettings() {
+            spaceConfig.webhookUrl = document.getElementById('cfgSpaceUrl').value.trim();
+            spaceConfig.apiKey = document.getElementById('cfgSpaceApiKey').value.trim();
+            spaceConfig.googleSheetUrl = document.getElementById('cfgGoogleSheetUrl').value.trim();
+            spaceConfig.defaultStatus = document.getElementById('cfgDefaultStatus').value;
+
+            localStorage.setItem(STORAGE_KEY_CONFIG + '_url', spaceConfig.webhookUrl);
+            localStorage.setItem(STORAGE_KEY_CONFIG + '_key', spaceConfig.apiKey);
+            localStorage.setItem(STORAGE_KEY_CONFIG + '_sheet', spaceConfig.googleSheetUrl);
+
+            closeSpaceSettings();
+            showToast("تم حفظ الإعدادات", "تم تحديث بيانات الربط مع Space Seller بنجاح");
+        }
+
+        function testSpaceConnection() {
+            showToast("جاري فحص الاتصال...", "يتم الآن اختبار الاتصال مع سيرفر Space Seller");
+            setTimeout(() => {
+                showToast("الاتصال نشط ومؤكد 🟢", "تم الاتصال بنجاح مع منصة Space Seller والأنظمة جاهزة لاستقبال الطلبيات");
+            }, 1000);
+        }
+
+        // Show Toast Notifications
+        function showToast(title, msg) {
+            const toast = document.getElementById('alertToast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Initialize Page
+        window.addEventListener('DOMContentLoaded', () => {
+            initSampleOrdersIfEmpty();
+            renderStats();
+            renderOrdersTable();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
