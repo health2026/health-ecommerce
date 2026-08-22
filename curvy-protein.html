@@ -381,7 +381,7 @@
                 <div>
                     <h2 style="font-size: 2.2rem; margin-bottom: 20px; font-weight: 800;">اختر العرض المناسب لك</h2>
                     
-                    <div class="package-option selected" onclick="selectPackage(1, 279, 'Curvy Shape (علبة واحدة)', this)">
+                    <div class="package-option selected" onclick="selectPackage(1, 279, 'Curvy Shape (علبة واحدة)', 'fem-boost250g', this)">
                         <div>
                             <div class="package-title">علبة واحدة (250G)</div>
                             <div style="font-size: 0.85rem; color: #94a3b8;">تكفي لمدة 25-30 يوماً</div>
@@ -389,7 +389,7 @@
                         <div class="package-price">279 درهم</div>
                     </div>
                     
-                    <div class="package-option" onclick="selectPackage(2, 329, 'Curvy Shape (علبتين)', this)">
+                    <div class="package-option" onclick="selectPackage(2, 329, 'Curvy Shape (علبتين)', 'fem-boost500g', this)">
                         <div>
                             <div class="package-title">علبتين (500G) 🔥 الأكثر طلباً</div>
                             <div style="font-size: 0.85rem; color: #34d399;">توفير رائع + شحن مجاني</div>
@@ -397,7 +397,7 @@
                         <div class="package-price">329 درهم</div>
                     </div>
                     
-                    <div class="package-option" onclick="selectPackage(3, 379, 'Curvy Shape (3 علب)', this)">
+                    <div class="package-option" onclick="selectPackage(3, 379, 'Curvy Shape (3 علب)', 'fem-boost750g', this)">
                         <div>
                             <div class="package-title">3 علب (750G) ⭐ العرض الاقتصادي</div>
                             <div style="font-size: 0.85rem; color: #34d399;">البرنامج الكامل لزيادة الوزن والتوفير الأكبر</div>
@@ -441,11 +441,13 @@
         let selectedQty = 1;
         let selectedPrice = 279;
         let selectedPackageName = 'Curvy Shape (علبة واحدة)';
+        let selectedSku = 'fem-boost250g';
         
-        function selectPackage(qty, price, pkgName, element) {
+        function selectPackage(qty, price, pkgName, sku, element) {
             selectedQty = qty;
             selectedPrice = price;
             selectedPackageName = pkgName;
+            selectedSku = sku || 'fem-boost250g';
             
             document.querySelectorAll('.package-option').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
@@ -470,7 +472,6 @@
             }
 
             const btn = document.getElementById('orderSubmitBtn');
-            const originalText = btn.innerHTML;
             btn.innerHTML = 'جاري تسجيل وإرسال طلبك... ⏳';
             btn.disabled = true;
 
@@ -484,14 +485,14 @@
                 city: city,
                 address: address,
                 product: selectedPackageName,
-                sku: "fem-boost250g",
+                sku: selectedSku,
                 qty: selectedQty,
                 price: selectedPrice,
                 status: "PENDING",
                 notes: "طلب مباشر من صفحة المنتج (Landing Page)"
             };
 
-            // Save order in local storage so it instantly appears in orders.html (Space Seller Hub)
+            // 1. Save order in local storage so it instantly appears in orders.html (Space Seller Hub)
             try {
                 let orders = JSON.parse(localStorage.getItem('health2026_store_orders') || '[]');
                 orders.unshift(orderObj);
@@ -500,24 +501,58 @@
                 console.error("Local storage save error:", err);
             }
 
-            // Sync with webhook if configured
+            // 2. Automatic Real-time Webhook Dispatch to Space Seller & Google Sheets
+            const spaceWebhookUrl = localStorage.getItem('health2026_spaceseller_config_url');
+            const spaceApiKey = localStorage.getItem('health2026_spaceseller_config_key');
             const sheetUrl = localStorage.getItem('health2026_spaceseller_config_sheet');
+
+            // Format payload according to Space Seller standard API specifications
+            const spacePayload = {
+                order_id: orderId,
+                customer_name: name,
+                name: name,
+                phone: phone,
+                city: city,
+                address: address,
+                product_name: selectedPackageName,
+                sku: "fem-boost250g",
+                quantity: selectedQty,
+                price: selectedPrice,
+                currency: "MAD",
+                notes: "طلب مباشر من صفحة الهبوط",
+                source: "LandingPage",
+                created_at: new Date().toISOString()
+            };
+
+            // Send to Space Seller Webhook if configured
+            if (spaceWebhookUrl && !spaceWebhookUrl.includes('demo')) {
+                fetch(spaceWebhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': spaceApiKey ? `Bearer ${spaceApiKey}` : ''
+                    },
+                    body: JSON.stringify(spacePayload)
+                }).catch(e => console.log("Space Seller Direct Sync Error:", e));
+            }
+
+            // Send to Google Sheets Webhook (Auto-Sync) if configured
             if (sheetUrl) {
                 fetch(sheetUrl, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderObj)
-                }).catch(e => console.log("Sync error:", e));
+                    body: JSON.stringify(spacePayload)
+                }).catch(e => console.log("Sheet sync error:", e));
             }
 
             setTimeout(() => {
                 btn.innerHTML = 'تم استلام طلبك بنجاح ✅';
                 btn.style.background = '#10b981';
                 
-                alert(`شكراً لك يا ${name}! تم تسجيل طلبك بنجاح برقم ${orderId}.\nسيتصل بك فريق العمل لتأكيد موعد التوصيل.`);
+                alert(`شكراً لك يا ${name}! تم تسجيل طلبك بنجاح برقم ${orderId}.\nتم إرسال الطلبية تلقائياً إلى نظام الشحن والتأكيد.`);
                 window.location.href = 'orders.html';
-            }, 1000);
+            }, 800);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
