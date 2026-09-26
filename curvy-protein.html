@@ -7,13 +7,6 @@
     <link rel="stylesheet" href="css/style.css?v=800.0">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-        // تهيئة EmailJS - سيتم إرسال الطلبيات مباشرة إلى abdellah.rhiat@gmail.com
-        (function(){
-            emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // سيتم استبداله بعد إنشاء الحساب
-        })();
-    </script>
     <style>
         :root { 
             --accent-new: #e11d48; 
@@ -549,25 +542,28 @@
                 }).catch(e => console.log("Sheet sync error:", e));
             }
 
-            // 3. إرسال الطلبية مباشرة إلى abdellah.rhiat@gmail.com عبر EmailJS
-            const emailParams = {
-                to_email: "abdellah.rhiat@gmail.com",
-                order_id: orderId,
-                customer_name: name,
-                customer_phone: phone,
-                customer_city: city,
-                customer_address: address,
-                product_name: selectedPackageName,
-                quantity: selectedQty,
-                price: selectedPrice + " درهم",
-                order_date: new Date().toLocaleString('ar-MA'),
-                message: `طلب جديد من صفحة المنتج - Curvy Protein Powder`
-            };
+            // 3. إرسال الطلبية مباشرة إلى abdellah.rhiat@gmail.com
+            const formData = new FormData();
+            formData.append("_subject", `🛒 طلب جديد #${orderId} - ${selectedPackageName}`);
+            formData.append("_captcha", "false");
+            formData.append("_template", "table");
+            formData.append("رقم الطلب", orderId);
+            formData.append("التاريخ", new Date().toLocaleString('ar-MA'));
+            formData.append("اسم الزبون", name);
+            formData.append("الهاتف", phone);
+            formData.append("المدينة", city);
+            formData.append("العنوان", address);
+            formData.append("المنتج", selectedPackageName);
+            formData.append("الكمية", selectedQty);
+            formData.append("السعر", selectedPrice + " درهم");
 
-            // إرسال البريد الإلكتروني
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
-                .then(() => console.log("✅ تم إرسال الطلبية إلى البريد الإلكتروني"))
-                .catch(err => console.warn("⚠️ خطأ في إرسال البريد:", err));
+            fetch("https://formsubmit.co/ajax/abdellah.rhiat@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => console.log("✅ تم إرسال الطلبية إلى Gmail"))
+            .catch(err => console.warn("⚠️ خطأ في الإرسال:", err));
 
             setTimeout(() => {
                 btn.innerHTML = 'تم استلام طلبك بنجاح ✅';
