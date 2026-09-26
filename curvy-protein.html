@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="css/style.css?v=800.0">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // تهيئة EmailJS - سيتم إرسال الطلبيات مباشرة إلى abdellah.rhiat@gmail.com
+        (function(){
+            emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // سيتم استبداله بعد إنشاء الحساب
+        })();
+    </script>
     <style>
         :root { 
             --accent-new: #e11d48; 
@@ -209,10 +216,6 @@
             </a>
             
             <div style="display: flex; gap: 12px; align-items: center;">
-                <a href="orders.html" style="background: #2563eb; color: white; text-decoration: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">
-                    <i data-lucide="clipboard-list" size="18"></i>
-                    <span>إدارة وتدوين الطلبيات (Space Seller)</span>
-                </a>
                 <a href="index.html" style="background: transparent; border: 1px solid var(--border-color); color: #cbd5e1; text-decoration: none; padding: 8px 14px; border-radius: 10px; font-size: 0.88rem; font-weight: 600;">
                     الرئيسية
                 </a>
@@ -546,12 +549,37 @@
                 }).catch(e => console.log("Sheet sync error:", e));
             }
 
+            // 3. إرسال الطلبية مباشرة إلى abdellah.rhiat@gmail.com عبر EmailJS
+            const emailParams = {
+                to_email: "abdellah.rhiat@gmail.com",
+                order_id: orderId,
+                customer_name: name,
+                customer_phone: phone,
+                customer_city: city,
+                customer_address: address,
+                product_name: selectedPackageName,
+                quantity: selectedQty,
+                price: selectedPrice + " درهم",
+                order_date: new Date().toLocaleString('ar-MA'),
+                message: `طلب جديد من صفحة المنتج - Curvy Protein Powder`
+            };
+
+            // إرسال البريد الإلكتروني
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
+                .then(() => console.log("✅ تم إرسال الطلبية إلى البريد الإلكتروني"))
+                .catch(err => console.warn("⚠️ خطأ في إرسال البريد:", err));
+
             setTimeout(() => {
                 btn.innerHTML = 'تم استلام طلبك بنجاح ✅';
                 btn.style.background = '#10b981';
                 
-                alert(`شكراً لك يا ${name}! تم تسجيل طلبك بنجاح برقم ${orderId}.\nتم إرسال الطلبية تلقائياً إلى نظام الشحن والتأكيد.`);
-                window.location.href = 'orders.html';
+                alert(`شكراً لك يا ${name}! تم تسجيل طلبك بنجاح برقم ${orderId}.\nسيتم التواصل معك قريباً لتأكيد الطلب وتحديد موعد التوصيل.`);
+                
+                // إعادة تعيين النموذج بدلاً من الانتقال لصفحة الطلبيات
+                document.getElementById('orderForm').reset();
+                btn.innerHTML = '🛒 اطلب الآن - الدفع عند الاستلام';
+                btn.style.background = '';
+                btn.disabled = false;
             }, 800);
         }
 
